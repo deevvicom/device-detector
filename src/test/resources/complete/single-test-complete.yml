@@ -1,0 +1,18 @@
+-
+  user_agent: Mozilla/5.0 (DirectFB; U; Linux 7630; en) AppleWebKit/531.2+ (KHTML, like Gecko) Safari/531.2+ HbbTV/1.1.1 ( ;LGE ;GLOBAL_PLAT3 ;BR.8.97.067.B ;1.0.0.1 ;)
+  os:
+    name: GNU/Linux
+    version: ""
+    platform: ""
+  client:
+    type: browser
+    name: Safari
+    version: ""
+    engine: WebKit
+    engine_version: "531.2"
+  device:
+    type: tv
+    brand: LG
+    model: GLOBAL PLAT3
+  os_family: GNU/Linux
+  browser_family: Safari
