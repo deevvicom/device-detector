@@ -13,7 +13,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
@@ -30,7 +29,8 @@ public class DeviceDetectorParserTest {
     @Test
     public void testRunSingleFile() throws IOException {
 
-        runTest("/complete/single-test-complete.yml");
+        //runTest("/complete/single-test-complete.yml");
+        runTest("/complete/test-complete-wearable.yml");
     }
 
     @Test
@@ -69,6 +69,10 @@ public class DeviceDetectorParserTest {
         runTest("/complete/test-complete-smartphone-15.yml");
         runTest("/complete/test-complete-smartphone-16.yml");
         runTest("/complete/test-complete-smartphone-17.yml");
+        runTest("/complete/test-complete-smartphone-18.yml");
+        runTest("/complete/test-complete-smartphone-19.yml");
+        runTest("/complete/test-complete-smartphone-20.yml");
+        runTest("/complete/test-complete-smartphone-21.yml");
 
         runTest("/complete/test-complete-tablet.yml");
         runTest("/complete/test-complete-tablet-1.yml");

@@ -245,3 +245,75 @@
     type: mobile app
     name: Twitter
     version: ""
+-
+  user_agent: Instapaper/7.8.3.3; CFNetwork/1128.0.1; Darwin/19.6.0
+  client:
+    type: mobile app
+    name: Instapaper
+    version: 7.8.3.3
+-
+  user_agent: Keeper/14.11.1.8605; CFNetwork/978.0.7; Darwin/18.7.0
+  client:
+    type: mobile app
+    name: Keeper Password Manager
+    version: 14.11.1.8605
+-
+  user_agent: WeChatShareExtensionNew/7.0.15.33; CFNetwork/1128.0.1; Darwin/19.6.0
+  client:
+    type: mobile app
+    name: WeChat Share Extension
+    version: 7.0.15.33
+-
+  user_agent: Skyeng Teachers/17; CFNetwork/1128.0.1; Darwin/19.6.0
+  client:
+    type: mobile app
+    name: Skyeng Teachers
+    version: "17"
+-
+  user_agent: Kik/15.15.0.21560 (Android 10) Mozilla/5.0 (Linux; Android 10; Pixel 2 Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.186 Mobile Safari/537.36
+  client:
+    type: mobile app
+    name: Kik
+    version: 15.15.0.21560
+-
+  user_agent: 1PasswordThumbs/1 CFNetwork/596.5 Darwin/12.5.0 (x86_64) (MacBookAir4%2C1)
+  client:
+    type: mobile app
+    name: 1Password
+    version: "1"
+-
+  user_agent: Word/15.22.506 (Mac OS/10.11.5; Desktop; en-US; NonAppStore; Apple/MacBookAir7,1)
+  client:
+    type: mobile app
+    name: Microsoft Office Word
+    version: 15.22.506
+-
+  user_agent: Microsoft Office PowerPoint/15.29.1215 (Mac OS/10.11.5; Desktop; en-US; NonAppStore; Apple/MacBookAir7,2)
+  client:
+    type: mobile app
+    name: Microsoft Office PowerPoint
+    version: 15.29.1215
+-
+  user_agent: Microsoft Office Word/16.11.319 (Mac OS/10.10.5; Desktop; en-US; NonAppStore; Apple/MacBookAir6,1)
+  client:
+    type: mobile app
+    name: Microsoft Office Word
+    version: 16.11.319
+-
+  user_agent: Microsoft Office Excel/16.44.1213 (Mac OS/11.1; Desktop; en-US; AppStore; Apple/MacBookAir10,1)
+  client:
+    type: mobile app
+    name: Microsoft Office Excel
+    version: 16.44.1213
+-
+  user_agent: Microsoft Office OneNote/16.43/201106 (iOS/14.0.1; Tablet; es-MX; AppStore; Apple/iPad11,6)
+  client:
+    type: mobile app
+    name: Microsoft Office OneNote
+    version: "16.43"
+-
+  user_agent: Microsoft Office Mobile/2.44.1211 (iOS/14.4; Phone; en-US; AppStore; Apple/iPhone8,4)
+  client:
+    type: mobile app
+    name: Microsoft Office Mobile
+    version: 2.44.1211

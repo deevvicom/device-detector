@@ -26,14 +26,16 @@ public final class OperatingSystemParser implements Parser, ListLoader<Operating
     /**
      * List with operating systems having name not capitalized.
      */
-    private static final Set<String> notCapitalizedOS = ImmutableSet.of("", "iOS", "webOS", "palmOS");
+    private static final Set<String> notCapitalizedOS = ImmutableSet.of("", "iOS", "webOS", "palmOS","watchOS");
 
     /**
      * Regexes for OS platforms.
      */
     private static final Map<String, Pattern> platformMapping = new ImmutableMap.Builder<String, Pattern>()
-            .put("ARM", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:arm)", CASE_INSENSITIVE))
-            .put("x64", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:WOW64|x64|win64|amd64|x86_64)", CASE_INSENSITIVE))
+            .put("ARM", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:arm|aarch64|Watch ?OS|Watch1,[12])", CASE_INSENSITIVE))
+            .put("MIPS", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:mips)", CASE_INSENSITIVE))
+            .put("SuperH", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:sh4)", CASE_INSENSITIVE))
+            .put("x64", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:WOW64|x64|win64|amd64|x86_?64)", CASE_INSENSITIVE))
             .put("x86", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:i[0-9]86|i86pc)", CASE_INSENSITIVE))
             .build();
 

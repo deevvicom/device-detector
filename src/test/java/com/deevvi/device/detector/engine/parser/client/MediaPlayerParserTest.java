@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.deevvi.device.detector.testsutils.ParserTestUtils.extractValue;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.getKeyFromResult;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
 
@@ -36,8 +37,9 @@ public class MediaPlayerParserTest {
                     System.out.println(parseResult);
                     ((Map) map.get("client")).entrySet().forEach(entryObject -> {
                         Map.Entry entry = (Map.Entry) entryObject;
-                        if (StringUtils.isNotBlank((String) entry.getValue())) {
-                            Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), entry.getValue());
+                        String value = extractValue(entry.getValue());
+                        if (StringUtils.isNotBlank(value)) {
+                            Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), value);
                         }
                     });
                 });

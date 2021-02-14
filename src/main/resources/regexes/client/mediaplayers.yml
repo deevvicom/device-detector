@@ -58,6 +58,10 @@
   name: 'SubStream'
   version: '$1'
 
+- regex: 'Sonos/([\d\.]+)?'
+  name: 'SONOS'
+  version: $1
+
 - regex: '(?:Lib)?VLC(?:/([\d\.]+))?'
   name: 'VLC'
   version: '$1'
