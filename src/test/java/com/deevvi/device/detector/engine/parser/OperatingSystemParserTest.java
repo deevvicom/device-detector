@@ -34,7 +34,6 @@ public class OperatingSystemParserTest {
                     if (parseResult.isEmpty()) {
                         Assert.fail("Unable to parseResult " + userAgent);
                     }
-                    System.out.println(parseResult);
 
                     Map<String, String> clientMap = (Map) map.get("os");
                     System.out.println(parseResult);
