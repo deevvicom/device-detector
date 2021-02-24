@@ -63,7 +63,7 @@ public final class DeviceDetectorParser {
     private static final Pattern TOUCH_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Touch)", CASE_INSENSITIVE);
     private static final Pattern ANDROID_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Android( [\\.0-9]+)?; Tablet;)", CASE_INSENSITIVE);
     private static final Pattern OPERA_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Opera Tablet)", CASE_INSENSITIVE);
-    private static final Pattern CHROME_SMARTPHONE_PATTERN = Pattern.compile("(?:^|[^A-Z_-])Chrome/[\\.0-9]* Mobile", CASE_INSENSITIVE);
+    private static final Pattern CHROME_SMARTPHONE_PATTERN = Pattern.compile("(?:^|[^A-Z_-])Chrome/[\\.0-9]* (?:Mobile|eliboM)", CASE_INSENSITIVE);
     private static final Pattern CHROME_TABLET_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]* (?!Mobile))", CASE_INSENSITIVE);
     private static final Pattern CHROME_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]*)", CASE_INSENSITIVE);
 

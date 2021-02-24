@@ -30,8 +30,8 @@ public class DeviceDetectorParserTest {
     @Test
     public void testRunSingleFile() throws IOException {
 
-        //runTest("/complete/single-test-complete.yml");
-        runTest("/complete/test-complete-smartphone-20.yml");
+        runTest("/complete/single-test-complete.yml");
+       /// runTest("/complete/test-complete-unknown.yml");
     }
 
     @Test
