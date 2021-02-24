@@ -1,9 +1,10 @@
 package com.deevvi.device.detector.engine.parser.device;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests for {@link TelevisionParser} class.
@@ -20,11 +21,11 @@ public class TelevisionParserTest {
         Map<String, String> result = parser.parse(userAgent);
 
         //verify
-        Assert.assertNotNull(result);
-        Assert.assertFalse(result.isEmpty());
+        assertThat(result).isNotNull();
+        assertThat(result).isNotEmpty();
         System.out.println(" --> " + userAgent);
         System.out.println(result);
-        Assert.assertEquals("Philips", result.get("brand"));
-        Assert.assertEquals("NetTV Series", result.get("model"));
+        assertThat(result.get("brand")).isEqualTo("Philips");
+        assertThat(result.get("model")).isEqualTo("NetTV Series");
     }
 }

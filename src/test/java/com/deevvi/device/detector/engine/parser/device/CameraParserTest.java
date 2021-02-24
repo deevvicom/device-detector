@@ -1,8 +1,7 @@
 package com.deevvi.device.detector.engine.parser.device;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import com.google.common.truth.Truth;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -34,11 +33,7 @@ public class CameraParserTest {
                         System.out.println(parseResult);
                         ((Map) map.get("device")).entrySet().forEach(entryObject -> {
                             Map.Entry entry = (Map.Entry) entryObject;
-                            if (entry.getKey().equals("type")) {
-                                Assert.assertEquals(parseResult.get("deviceType"), entry.getValue());
-                            } else if (StringUtils.isNotBlank((String) entry.getValue())) {
-                                Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), entry.getValue());
-                            }
+                            Truth.assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(entry.getValue());
                         });
                     }
                 });

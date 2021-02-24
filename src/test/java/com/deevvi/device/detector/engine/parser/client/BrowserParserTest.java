@@ -1,8 +1,8 @@
 package com.deevvi.device.detector.engine.parser.client;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.extractValue;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.getKeyFromResult;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for {@link BrowserParser} class.
@@ -20,11 +22,11 @@ public class BrowserParserTest {
 
     private final BrowserParser parser = new BrowserParser(new BrowserEngineParser());
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullLoader() {
 
         //call
-        new BrowserParser(null);
+        assertThrows(NullPointerException.class, () -> new BrowserParser(null));
     }
 
     @Test
@@ -40,7 +42,7 @@ public class BrowserParserTest {
                     System.out.println(index.getAndIncrement() + " --> " + userAgent);
                     Map<String, String> parseResult = parser.parse(userAgent);
                     if (parseResult.isEmpty()) {
-                        Assert.fail("Unable to parse " + userAgent);
+                        Assertions.fail("Unable to parse " + userAgent);
                     }
                     System.out.println(parseResult);
                     if (map.containsKey("client") && map.get("client") instanceof Map) {
@@ -51,8 +53,7 @@ public class BrowserParserTest {
                                 .forEach(entry -> {
                                     String value = extractValue(entry.getValue());
                                     if (StringUtils.isNotBlank(value)) {
-                                        String expectedValue = parseResult.get(getKeyFromResult(entry));
-                                        Assert.assertEquals(expectedValue, value);
+                                        assertThat(value).isEqualTo(parseResult.get(getKeyFromResult(entry)));
                                     }
                                 });
                     }
@@ -77,8 +78,7 @@ public class BrowserParserTest {
             Map.Entry entry = (Map.Entry) entryObject;
             String value = extractValue(entry.getValue());
             if (StringUtils.isNotBlank(value)) {
-                String expectedValue = json.get(getKeyFromResult(entry));
-                Assert.assertEquals(expectedValue, value);
+                assertThat(value).isEqualTo(json.get(getKeyFromResult(entry)));
             }
         }
 
@@ -145,7 +145,7 @@ public class BrowserParserTest {
                                         .forEach(entry -> {
                                             String value = extractValue(entry.getValue());
                                             if (StringUtils.isNotBlank(value)) {
-                                                Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), value);
+                                                assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(value);
                                             }
                                         });
                             }

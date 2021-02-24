@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +15,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link DeviceDetectorParser} class.
@@ -99,7 +100,7 @@ public class DeviceDetectorParserTest {
                     System.out.println("Test no: " + index.getAndIncrement() + " --> " + userAgent);
                     DeviceDetectorResult result = deviceDetectorParser.parse(userAgent);
                     if (!result.found()) {
-                        Assert.fail("Unable to parse user agent: " + userAgent);
+                        fail("Unable to parse user agent: " + userAgent);
                     }
                     String json = result.toJSON();
                     System.out.println(result.toMap());
@@ -116,7 +117,7 @@ public class DeviceDetectorParserTest {
                                     System.out.println(" + " + category + "." + key);
                                     String expectedValue = extractValue(json, category, key);
                                     if (entry.getValue() != null && !entry.getValue().equals("null")) {
-                                        Assert.assertEquals(expectedValue, ParserTestUtils.extractValue(entry.getValue()));
+                                        assertThat(ParserTestUtils.extractValue(entry.getValue())).ignoringCase().isEqualTo(expectedValue);
                                     }
                                 }
                             }
@@ -127,7 +128,7 @@ public class DeviceDetectorParserTest {
                         String expectedValue = extractValue(json, "os", "osFamily");
 
                         if (!map.get("os_family").equals("Unknown")) {
-                            Assert.assertEquals(expectedValue, map.get("os_family"));
+                            assertThat(map.get("os_family")).isEqualTo(expectedValue);
                         }
                     }
 
@@ -136,7 +137,7 @@ public class DeviceDetectorParserTest {
                         System.out.println(" + browser_family");
                         String expectedValue = extractValue(json, "client", "browserFamily");
                         if (!map.get("browser_family").equals("Unknown")) {
-                            Assert.assertEquals(expectedValue, map.get("browser_family"));
+                            assertThat((String) map.get("browser_family")).ignoringCase().isEqualTo(expectedValue);
                         }
                     }
                 });

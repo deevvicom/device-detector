@@ -1,8 +1,7 @@
 package com.deevvi.device.detector.engine.parser.device;
 
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import com.google.common.truth.Truth;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,12 +35,7 @@ public class ConsoleParserTest {
                         System.out.println(parseResult);
                         clientMap.entrySet().forEach(entryObject -> {
                             Map.Entry entry = (Map.Entry) entryObject;
-                            if (entry.getKey().equals("type")) {
-                                String value = parseResult.get("deviceType");
-                                Assert.assertEquals(value, entry.getValue());
-                            } else if (StringUtils.isNotBlank((String) entry.getValue())) {
-                                Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), entry.getValue());
-                            }
+                            Truth.assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(entry.getValue());
                         });
                     }
                 });

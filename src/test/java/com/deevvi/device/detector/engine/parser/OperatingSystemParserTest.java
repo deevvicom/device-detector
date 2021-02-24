@@ -1,8 +1,7 @@
 package com.deevvi.device.detector.engine.parser;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,6 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.extractValue;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.getKeyFromResult;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link OperatingSystemParser} class.
@@ -32,7 +33,7 @@ public class OperatingSystemParserTest {
                     System.out.println(index.getAndIncrement() + " test --> " + userAgent);
                     Map<String, String> parseResult = parser.parse(userAgent);
                     if (parseResult.isEmpty()) {
-                        Assert.fail("Unable to parseResult " + userAgent);
+                        fail("Unable to parseResult " + userAgent);
                     }
 
                     Map<String, String> clientMap = (Map) map.get("os");
@@ -42,7 +43,7 @@ public class OperatingSystemParserTest {
                             .forEach(entry -> {
                                 String value = extractValue(entry.getValue());
                                 if (StringUtils.isNotBlank(value)) {
-                                    Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), value);
+                                    assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(value);
                                 }
                             });
                 });
@@ -106,7 +107,7 @@ public class OperatingSystemParserTest {
                                     .forEach(entry -> {
                                         String value = extractValue(entry.getValue());
                                         if (StringUtils.isNotBlank(value)) {
-                                            Assert.assertEquals(res.get(getKeyFromResult(entry)), value);
+                                            assertThat(res.get(getKeyFromResult(entry))).isEqualTo(value);
                                         }
                                     });
                         }

@@ -1,8 +1,7 @@
 package com.deevvi.device.detector.engine.parser.client;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -10,6 +9,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.getKeyFromResult;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link LibraryParser} class.
@@ -31,7 +32,7 @@ public class LibraryParserTest {
                     System.out.println(index.getAndIncrement() + " --> " + userAgent);
                     Map<String, String> parseResult = parser.parse(userAgent);
                     if (parseResult.isEmpty()) {
-                        Assert.fail("Unable to parse " + userAgent);
+                        fail("Unable to parse " + userAgent);
                     }
                     System.out.println(parseResult);
                     Map clientMap = (Map) map.get("client");
@@ -39,7 +40,7 @@ public class LibraryParserTest {
                     clientMap.entrySet().forEach(entryObject -> {
                         Map.Entry entry = (Map.Entry) entryObject;
                         if (StringUtils.isNotBlank((String) entry.getValue())) {
-                            Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), entry.getValue());
+                            assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(entry.getValue());
                         }
                     });
                 });

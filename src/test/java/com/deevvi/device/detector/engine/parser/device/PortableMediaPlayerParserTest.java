@@ -1,8 +1,7 @@
 package com.deevvi.device.detector.engine.parser.device;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.extractValue;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.getKeyFromResult;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
 
 /**
  * Tests for {@link PortableMediaPlayerParser} class.
@@ -38,9 +38,9 @@ public class PortableMediaPlayerParserTest {
                             Map.Entry entry = (Map.Entry) entryObject;
                             String value = extractValue(entry.getValue());
                             if (StringUtils.isNotBlank(value)) {
-                                String expectedValue = parseResult.get(getKeyFromResult(entry));
-                                if (!expectedValue.equals("feature phone") && !value.equals("smartphone")) {
-                                    Assert.assertEquals(expectedValue, value);
+                                String parsedValue = parseResult.get(getKeyFromResult(entry));
+                                if (!parsedValue.equals("feature phone") && !value.equals("smartphone")) {
+                                    assertThat(parsedValue).isEqualTo(value);
                                 }
                             }
                         });

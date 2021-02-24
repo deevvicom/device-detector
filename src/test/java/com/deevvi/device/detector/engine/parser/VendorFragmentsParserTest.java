@@ -1,14 +1,14 @@
 package com.deevvi.device.detector.engine.parser;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link VendorFragmentsParser} class.
@@ -31,12 +31,11 @@ public class VendorFragmentsParserTest {
                     System.out.println(index.getAndIncrement() + " test --> " + userAgent);
                     Map<String, String> parseResult = parser.parse(userAgent);
                     if (parseResult.isEmpty()) {
-                        Assert.fail("Unable to parseResult " + userAgent);
+                        fail("Unable to parseResult " + userAgent);
                     }
                     System.out.println(parseResult);
-                    String vendor = (String) map.get("vendor");
-                    String value = parseResult.get("vendor");
-                    Assert.assertEquals(value, vendor);
+
+                    assertThat( (String) map.get("vendor")).isEqualTo(parseResult.get("vendor"));
                 });
     }
 }

@@ -1,8 +1,7 @@
 package com.deevvi.device.detector.engine.parser.client;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Map;
@@ -11,6 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.extractValue;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.getKeyFromResult;
 import static com.deevvi.device.detector.testsutils.ParserTestUtils.loadRawArray;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link MediaPlayerParser} class.
@@ -32,14 +33,14 @@ public class MediaPlayerParserTest {
                     System.out.println(index.getAndIncrement() + " --> " + userAgent);
                     Map<String, String> parseResult = parser.parse(userAgent);
                     if (parseResult.isEmpty()) {
-                        Assert.fail("Unable to parse " + userAgent);
+                        fail("Unable to parse " + userAgent);
                     }
                     System.out.println(parseResult);
                     ((Map) map.get("client")).entrySet().forEach(entryObject -> {
                         Map.Entry entry = (Map.Entry) entryObject;
                         String value = extractValue(entry.getValue());
                         if (StringUtils.isNotBlank(value)) {
-                            Assert.assertEquals(parseResult.get(getKeyFromResult(entry)), value);
+                            assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(value);
                         }
                     });
                 });
