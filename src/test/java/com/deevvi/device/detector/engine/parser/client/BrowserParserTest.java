@@ -53,7 +53,7 @@ public class BrowserParserTest {
                                 .forEach(entry -> {
                                     String value = extractValue(entry.getValue());
                                     if (StringUtils.isNotBlank(value)) {
-                                        assertThat(value).isEqualTo(parseResult.get(getKeyFromResult(entry)));
+                                        assertThat(parseResult.get(getKeyFromResult(entry))).ignoringCase().isEqualTo(value);
                                     }
                                 });
                     }

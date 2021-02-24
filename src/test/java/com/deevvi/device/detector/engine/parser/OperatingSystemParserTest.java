@@ -43,7 +43,7 @@ public class OperatingSystemParserTest {
                             .forEach(entry -> {
                                 String value = extractValue(entry.getValue());
                                 if (StringUtils.isNotBlank(value)) {
-                                    assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(value);
+                                    assertThat(parseResult.get(getKeyFromResult(entry))).ignoringCase().isEqualTo(value);
                                 }
                             });
                 });
@@ -107,7 +107,7 @@ public class OperatingSystemParserTest {
                                     .forEach(entry -> {
                                         String value = extractValue(entry.getValue());
                                         if (StringUtils.isNotBlank(value)) {
-                                            assertThat(res.get(getKeyFromResult(entry))).isEqualTo(value);
+                                            assertThat(res.get(getKeyFromResult(entry))).ignoringCase().isEqualTo(value);
                                         }
                                     });
                         }

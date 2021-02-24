@@ -1,3 +1,31 @@
+# Deledao (https://www.deledao.com/)
+- regex: '(?:DeledaoPersonal|DeledaoFamily)/(\d+[\.\d]+)'
+  name: 'Deledao'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
+# HasBrowser (https://browser.hascoding.com)
+- regex: 'HasBrowser/(\d+[\.\d]+)'
+  name: 'HasBrowser'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
+# Byffox (https://byffox.sourceforge.io/index.php)
+- regex: 'Byffox/(\d+[\.\d]+)'
+  name: 'Byffox'
+  version: '$1'
+  engine:
+    default: 'Gecko'
+
+# CoolBrowser (https://play.google.com/store/apps/details?id=com.easybrowser.browser.coolbrowser)
+- regex: 'Chrome/(\d+[\.\d]+).+AgentWeb.+UCBrowser'
+  name: 'CoolBrowser'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
 # Dot Browser (https://dothq.co/)
 - regex: 'DotBrowser/(\d+[\.\d]+)'
   name: 'Dot Browser'
@@ -47,7 +75,7 @@
     default: 'Gecko'
 
 # BriskBard (https://www.briskbard.com/)
-- regex: Chrome.+BriskBard/(\d+[\.\d]+)
+- regex: 'Chrome.+BriskBard/(\d+[\.\d]+)'
   name: 'BriskBard'
   version: '$1'
   engine:
@@ -607,6 +635,11 @@
     default: 'Blink'
 
 # Qwant Mobile
+- regex: 'QwantiOS/(\d+[\.\d]+)'
+  name: 'Qwant Mobile'
+  version: '$1'
+  engine:
+    default: 'WebKit'
 - regex: 'QwantMobile(?:/(\d+[\.\d]+))?'
   name: 'Qwant Mobile'
   version: '$1'

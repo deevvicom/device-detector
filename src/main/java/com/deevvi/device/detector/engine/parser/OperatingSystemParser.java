@@ -36,7 +36,7 @@ public final class OperatingSystemParser implements Parser, ListLoader<Operating
             .put("MIPS", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:mips)", CASE_INSENSITIVE))
             .put("SuperH", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:sh4)", CASE_INSENSITIVE))
             .put("x64", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:WOW64|x64|win64|amd64|x86_?64)", CASE_INSENSITIVE))
-            .put("x86", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:i[0-9]86|i86pc)", CASE_INSENSITIVE))
+            .put("x86", Pattern.compile("(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:i[0-9]|x)86|i86pc", CASE_INSENSITIVE))
             .build();
 
     /**
