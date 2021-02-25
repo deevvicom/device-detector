@@ -3762,7 +3762,7 @@
   device:
     type: smartphone
     brand: Nomi
-    model: 3x81I
+    model: 3\x81I
   os_family: Android
   browser_family: Unknown
 - 

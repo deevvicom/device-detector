@@ -136,7 +136,6 @@ public interface Parser {
             return null;
         }
         String newString = raw.replaceAll("_", " ");
-        newString = newString.replaceAll(Pattern.quote("\\"), "");
         if (newString.endsWith(" TD")) {
             return newString.replaceAll(" TD", "");
         }

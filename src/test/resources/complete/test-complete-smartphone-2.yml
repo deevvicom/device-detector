@@ -5387,7 +5387,7 @@
     engine: WebKit
     engine_version: "534.31"
   device:
-    type: feature phone
+    type: smartphone
     brand: Bird
     model: T900
   os_family: Android

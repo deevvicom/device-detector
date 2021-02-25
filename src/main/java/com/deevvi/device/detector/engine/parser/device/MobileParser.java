@@ -142,15 +142,14 @@ public final class MobileParser implements Parser, MapLoader<Mobile> {
             return new DeviceInfo(brand, device, model);
         }
         String group = "$";
-        String regex_group = "\\$";
         while (model.contains(group + index)) {
             String current = matcher.group(index);
             if (current == null) {
 
-                model = model.replaceAll(regex_group + index, "");
+                model = model.replace("$" + index, "");
             } else {
 
-                model = model.replaceAll(regex_group + index, current);
+                model = model.replace("$" + index, current);
             }
             index++;
         }

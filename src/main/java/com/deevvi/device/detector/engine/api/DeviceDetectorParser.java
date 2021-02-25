@@ -39,6 +39,7 @@ import static com.deevvi.device.detector.engine.parser.Parser.SHORT_NAME;
 import static com.deevvi.device.detector.engine.parser.Parser.VENDOR;
 import static com.deevvi.device.detector.engine.parser.Parser.VERSION;
 import static com.deevvi.device.detector.engine.parser.device.DeviceType.DESKTOP;
+import static com.deevvi.device.detector.engine.parser.device.DeviceType.FEATURE_PHONE;
 import static com.deevvi.device.detector.engine.parser.device.DeviceType.SMARTPHONE;
 import static com.deevvi.device.detector.engine.parser.device.DeviceType.TABLET;
 import static com.deevvi.device.detector.engine.parser.device.DeviceType.TV;
@@ -199,6 +200,8 @@ public final class DeviceDetectorParser {
 
                 deviceDetails = createDeviceDetails(deviceDetails, userAgent, DESKTOP);
             }
+        } else if (deviceDetails.getOrDefault(DEVICE_TYPE, EMPTY_STRING).equals(FEATURE_PHONE.getDeviceName()) && isAndroid(osDetails)) {
+            deviceDetails = createDeviceDetails(deviceDetails, userAgent, SMARTPHONE);
         }
 
         if (noBrandFound(deviceDetails) && isRunningMacOS(osDetails)) {
@@ -273,8 +276,8 @@ public final class DeviceDetectorParser {
 
     private boolean isAndroid(Map<String, String> osDetails) {
 
-        String shortName = osDetails.get(SHORT_NAME);
-        return StringUtils.isNotBlank(shortName) && shortName.equals("AND");
+        String osFamily = osDetails.get(OS_FAMILY);
+        return StringUtils.isNotBlank(osFamily) && osFamily.equals("Android");
     }
 
     private boolean isMobile(String userAgent) {
