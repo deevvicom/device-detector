@@ -1,18 +1,18 @@
 -
-  user_agent: Mozilla/5.0 (Linux; U; Android 4.0.4; zh-CN; BIRD T900 Build/MocorDroid4.0.4) AppleWebKit/534.31 (KHTML, like Gecko) UCBrowser/9.2.3.324 U3/0.8.0 Mobile Safari/534.31
+  user_agent: Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/537.41 (KHTML, like Gecko) Large Screen WebAppManager Safari/537.41
   os:
-    name: MocorDroid
-    version: "4.0.4"
+    name: webOS
+    version: ""
     platform: ""
   client:
     type: browser
-    name: UC Browser
-    version: "9.2.3.324"
+    name: Safari
+    version: ""
     engine: WebKit
-    engine_version: "534.31"
+    engine_version: "537.41"
   device:
-    type: smartphone
-    brand: Bird
-    model: T900
-  os_family: Android
-  browser_family: Unknown
+    type: tv
+    brand: ""
+    model: ""
+  os_family: Other Mobile
+  browser_family: Safari

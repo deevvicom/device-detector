@@ -67,6 +67,7 @@ public final class DeviceDetectorParser {
     private static final Pattern CHROME_SMARTPHONE_PATTERN = Pattern.compile("(?:^|[^A-Z_-])Chrome/[\\.0-9]* (?:Mobile|eliboM)", CASE_INSENSITIVE);
     private static final Pattern CHROME_TABLET_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]* (?!Mobile))", CASE_INSENSITIVE);
     private static final Pattern CHROME_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]*)", CASE_INSENSITIVE);
+    private static final Pattern SMART_TV_OR_TIZIEN_TV = Pattern.compile("(?:^|[^A-Z_-])(SmartTV|Tizen.+ TV .+$)", CASE_INSENSITIVE);
 
     /**
      * Bot parser.
@@ -171,7 +172,7 @@ public final class DeviceDetectorParser {
 
                     deviceDetails = createDeviceDetails(deviceDetails, userAgent, TABLET);
                 }
-            } else if (isRunningTVBrowser(clientDetails)) {
+            } else if (isRunningTVBrowser(clientDetails) || isTizienOrSmartTv(userAgent) ) {
 
                 deviceDetails = createDeviceDetails(deviceDetails, userAgent, TV);
             } else if (hasAndroidTableFragment(userAgent) || hasOperaTabletFragment(userAgent)) {
@@ -216,6 +217,11 @@ public final class DeviceDetectorParser {
         }
 
         return DeviceDetectorResult.fromDevice(osDetails, clientDetails, deviceDetails);
+    }
+
+    private boolean isTizienOrSmartTv(String userAgent) {
+
+        return SMART_TV_OR_TIZIEN_TV.matcher(userAgent).find();
     }
 
     private Map<String, String> buildAppleDetails() {
