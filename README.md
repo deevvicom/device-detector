@@ -21,19 +21,19 @@ The recommended way to use this library is through your build tool.
 
 The device-detector artifact is published to Maven Central, using the group `com.deevvi`.
 
-Latest stable version is `1.4.0`.
+Latest stable version is `1.4.1`.
 
 Therefore,it can be added to your Gradle project by adding the dependencies:
 
 ```
-compile "com.deevvi:device-detector:1.4.0"
+compile "com.deevvi:device-detector:1.4.1"
 ```
 and in Maven:
 ```
 <dependency>
     <groupId>com.deevvi</groupId>
     <artifactId>device-detector</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 </dependency>
 ```
 
