@@ -83,6 +83,7 @@ public class DeviceDetectorParserTest {
         runTest("/complete/test-complete-tablet-4.yml");
 
         runTest("/complete/test-complete-tv.yml");
+        runTest("/complete/test-complete-tv-1.yml");
         runTest("/complete/test-complete-unknown.yml");
         runTest("/complete/test-complete-wearable.yml");
     }
