@@ -120,6 +120,7 @@ Google Earth=GE
 GOG Galaxy=GO
 HasBrowser=HS
 Hawk Turbo Browser=HA
+Helio=HE
 hola! Browser=HO
 HotJava=HJ
 Huawei Browser=HU

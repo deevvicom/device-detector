@@ -13,7 +13,6 @@ import com.deevvi.device.detector.engine.parser.client.PIMDeviceParser;
 import com.deevvi.device.detector.engine.parser.device.CameraParser;
 import com.deevvi.device.detector.engine.parser.device.CarParser;
 import com.deevvi.device.detector.engine.parser.device.ConsoleParser;
-import com.deevvi.device.detector.engine.parser.device.DeviceType;
 import com.deevvi.device.detector.engine.parser.device.MobileParser;
 import com.deevvi.device.detector.engine.parser.device.NotebookParser;
 import com.deevvi.device.detector.engine.parser.device.PortableMediaPlayerParser;
@@ -21,7 +20,6 @@ import com.deevvi.device.detector.engine.parser.device.TelevisionParser;
 import com.deevvi.device.detector.engine.parser.facade.ParserFacade;
 import com.deevvi.device.detector.engine.parser.facade.ParserPair;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 
@@ -30,7 +28,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.deevvi.device.detector.engine.parser.Parser.BRAND;
-import static com.deevvi.device.detector.engine.parser.Parser.BROWSER_FAMILY;
 import static com.deevvi.device.detector.engine.parser.Parser.DEVICE_TYPE;
 import static com.deevvi.device.detector.engine.parser.Parser.EMPTY_STRING;
 import static com.deevvi.device.detector.engine.parser.Parser.NAME;
@@ -56,6 +53,7 @@ public final class DeviceDetectorParser {
      */
     private static final List<String> DESKTOP_OS_LIST = fetchListFromFile("/configs/desktopOperatingSystems");
     private static final List<String> APPLE_OS_LIST = fetchListFromFile("/configs/appleOperatingSystems");
+    private static final List<String> TV_BROWSER_LIST = fetchListFromFile("/configs/tvBrowserList");
 
     /**
      * Patterns.
@@ -68,6 +66,8 @@ public final class DeviceDetectorParser {
     private static final Pattern CHROME_TABLET_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]* (?!Mobile))", CASE_INSENSITIVE);
     private static final Pattern CHROME_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]*)", CASE_INSENSITIVE);
     private static final Pattern SMART_TV_OR_TIZIEN_TV = Pattern.compile("(?:^|[^A-Z_-])(SmartTV|Tizen.+ TV .+$)", CASE_INSENSITIVE);
+    private static final Pattern OPERA_TV_STORE = Pattern.compile("(?:^|[^A-Z_-])(?:Opera TV Store)", CASE_INSENSITIVE);
+    private static final Pattern DESKTOP_FRAGMENT = Pattern.compile("(?:^|[^A-Z_-])(?:Desktop (x(?:32|64)|WOW64);)", CASE_INSENSITIVE);
 
     /**
      * Bot parser.
@@ -160,63 +160,110 @@ public final class DeviceDetectorParser {
         Map<String, String> clientDetails = clientParser.parse(userAgent);
         Map<String, String> deviceDetails = deviceParser.parse(userAgent);
 
-        if (StringUtils.isEmpty(deviceDetails.getOrDefault(DEVICE_TYPE, EMPTY_STRING))) {
-
-            String browserFamily = clientDetails.get(BROWSER_FAMILY);
-            if (isAndroid(osDetails) && (StringUtils.isNotBlank(browserFamily) && CHROME_PATTERN.matcher(userAgent).find())) {
-
-                if (CHROME_SMARTPHONE_PATTERN.matcher(userAgent).find()) {
-
-                    deviceDetails = createDeviceDetails(deviceDetails, userAgent, SMARTPHONE);
-                } else if (CHROME_TABLET_PATTERN.matcher(userAgent).find()) {
-
-                    deviceDetails = createDeviceDetails(deviceDetails, userAgent, TABLET);
-                }
-            } else if (isRunningTVBrowser(clientDetails) || isTizienOrSmartTv(userAgent) ) {
-
-                deviceDetails = createDeviceDetails(deviceDetails, userAgent, TV);
-            } else if (hasAndroidTableFragment(userAgent) || hasOperaTabletFragment(userAgent)) {
-
-                deviceDetails = createDeviceDetails(deviceDetails, userAgent, TABLET);
-            } else if (isMicrosoftTouch(osDetails, userAgent)) {
-
-                deviceDetails = createDeviceDetails(deviceDetails, userAgent, TABLET);
-
-            } else if (isMobile(userAgent)) {
-
-                deviceDetails = createDeviceDetails(deviceDetails, userAgent, SMARTPHONE);
-            } else if (isAndroid(osDetails) && osDetails.containsKey(VERSION)) {
-
-                String stringVersion = osDetails.get(VERSION);
-                DefaultArtifactVersion defaultVersion = new DefaultArtifactVersion(stringVersion);
-                if (defaultVersion.compareTo(new DefaultArtifactVersion("2.0")) < 0) {
-
-                    deviceDetails = createDeviceDetails(deviceDetails, userAgent, SMARTPHONE);
-                } else if (defaultVersion.compareTo(new DefaultArtifactVersion("3.0")) >= 0
-                        && defaultVersion.compareTo(new DefaultArtifactVersion("4.0")) < 0) {
-
-                    deviceDetails = createDeviceDetails(deviceDetails, userAgent, TABLET);
-                }
-            } else if (isDesktop(osDetails)) {
-
-                deviceDetails = createDeviceDetails(deviceDetails, userAgent, DESKTOP);
+        if (noBrandDetected(deviceDetails)) {
+            Map<String, String> vendorResults = vendorFragmentsParser.parse(userAgent);
+            String vendor = null;
+            if (!vendorResults.isEmpty()) {
+                vendor = vendorResults.get(VENDOR);
             }
-        } else if (deviceDetails.getOrDefault(DEVICE_TYPE, EMPTY_STRING).equals(FEATURE_PHONE.getDeviceName()) && isAndroid(osDetails)) {
-            deviceDetails = createDeviceDetails(deviceDetails, userAgent, SMARTPHONE);
+            if (StringUtils.isNotBlank(vendor)) {
+                deviceDetails.put(BRAND, vendor);
+            } else if (isRunningMacOS(osDetails)) {
+                deviceDetails.put(BRAND, "Apple");
+            }
         }
 
-        if (noBrandFound(deviceDetails) && isRunningMacOS(osDetails)) {
-
-            deviceDetails.putAll(buildAppleDetails());
+        if (noDeviceTypeDetected(deviceDetails)) {
+            if (isAndroid(osDetails) && hasChromePattern(userAgent)) {
+                if (isChromeSmartphone(userAgent)) {
+                    deviceDetails.put(DEVICE_TYPE, SMARTPHONE.getDeviceName());
+                } else if (isChromeTablet(userAgent)) {
+                    deviceDetails.put(DEVICE_TYPE, TABLET.getDeviceName());
+                }
+            } else if ((hasAndroidTableFragment(userAgent) || hasOperaTabletFragment(userAgent))) {
+                deviceDetails.put(DEVICE_TYPE, TABLET.getDeviceName());
+            } else if (hasAndroidMobileFragment(userAgent)) {
+                deviceDetails.put(DEVICE_TYPE, SMARTPHONE.getDeviceName());
+            }
         }
 
+        if (noDeviceTypeDetected(deviceDetails) && isAndroid(osDetails) && osDetails.containsKey(VERSION)) {
+            String stringVersion = osDetails.get(VERSION);
+            DefaultArtifactVersion defaultVersion = new DefaultArtifactVersion(stringVersion);
+            if (defaultVersion.compareTo(new DefaultArtifactVersion("2.0")) < 0) {
+                deviceDetails.put(DEVICE_TYPE, SMARTPHONE.getDeviceName());
+            } else if (defaultVersion.compareTo(new DefaultArtifactVersion("3.0")) >= 0
+                    && defaultVersion.compareTo(new DefaultArtifactVersion("4.0")) < 0) {
+                deviceDetails.put(DEVICE_TYPE, TABLET.getDeviceName());
+            }
+        }
 
-        if (isDevicePhone(deviceDetails) && isAndroid(osDetails)) {
-
-            deviceDetails = createDeviceDetails(deviceDetails, userAgent, SMARTPHONE);
+        if (isFeaturePhone(deviceDetails) && isAndroid(osDetails)) {
+            deviceDetails.put(DEVICE_TYPE, SMARTPHONE.getDeviceName());
+        }
+        String osName = osDetails.getOrDefault(NAME, EMPTY_STRING);
+        if (noDeviceTypeDetected(deviceDetails) && (osName.equals("Windows RT") || (osName.equals("Windows")
+                && new DefaultArtifactVersion(osDetails.getOrDefault(VERSION, "0")).compareTo(new DefaultArtifactVersion("8.0")) >= 0
+                && isTouch(userAgent)))) {
+            deviceDetails.put(DEVICE_TYPE, TABLET.getDeviceName());
+        }
+        if (isOperaTV(userAgent)) {
+            deviceDetails.put(DEVICE_TYPE, TV.getDeviceName());
+        }
+        if (noDeviceTypeDetected(deviceDetails) && isTizienOrSmartTv(userAgent)) {
+            deviceDetails.put(DEVICE_TYPE, TV.getDeviceName());
+        }
+        if (noDeviceTypeDetected(deviceDetails) && isTVBrowser(clientDetails)) {
+            deviceDetails.put(DEVICE_TYPE, TV.getDeviceName());
+        }
+        if (!isDesktopDeviceType(deviceDetails) && userAgent.toLowerCase().contains("desktop") && hasDesktopFragment(userAgent)) {
+            deviceDetails.put(DEVICE_TYPE, DESKTOP.getDeviceName());
+        }
+        if (noDeviceTypeDetected(deviceDetails) && isDesktop(osDetails)) {
+            deviceDetails.put(DEVICE_TYPE, DESKTOP.getDeviceName());
         }
 
         return DeviceDetectorResult.fromDevice(osDetails, clientDetails, deviceDetails);
+    }
+
+    private boolean hasDesktopFragment(String userAgent) {
+        return DESKTOP_FRAGMENT.matcher(userAgent).find();
+    }
+
+    private boolean isDesktopDeviceType(Map<String, String> deviceDetails) {
+        return deviceDetails.getOrDefault(DEVICE_TYPE, EMPTY_STRING).equals(DESKTOP.getDeviceName());
+    }
+
+    private boolean isTVBrowser(Map<String, String> clientDetails) {
+        return TV_BROWSER_LIST.contains(clientDetails.getOrDefault(NAME, EMPTY_STRING));
+    }
+
+    private boolean isOperaTV(String userAgent) {
+        return OPERA_TV_STORE.matcher(userAgent).find();
+    }
+
+    private boolean hasChromePattern(String userAgent) {
+        return CHROME_PATTERN.matcher(userAgent).find();
+    }
+
+    private boolean isChromeTablet(String userAgent) {
+        return CHROME_TABLET_PATTERN.matcher(userAgent).find();
+    }
+
+    private boolean isChromeSmartphone(String userAgent) {
+        return CHROME_SMARTPHONE_PATTERN.matcher(userAgent).find();
+    }
+
+    private boolean noDeviceTypeDetected(Map<String, String> deviceDetails) {
+        return StringUtils.isEmpty(deviceDetails.getOrDefault(DEVICE_TYPE, EMPTY_STRING));
+    }
+
+    private boolean noBrandDetected(Map<String, String> deviceDetails) {
+        return StringUtils.isEmpty(deviceDetails.getOrDefault(BRAND, EMPTY_STRING));
+    }
+
+    private boolean isFeaturePhone(Map<String, String> deviceDetails) {
+        return deviceDetails.getOrDefault(DEVICE_TYPE, EMPTY_STRING).equals(FEATURE_PHONE.getDeviceName());
     }
 
     private boolean isTizienOrSmartTv(String userAgent) {
@@ -224,28 +271,10 @@ public final class DeviceDetectorParser {
         return SMART_TV_OR_TIZIEN_TV.matcher(userAgent).find();
     }
 
-    private Map<String, String> buildAppleDetails() {
-        Map<String, String> map = Maps.newHashMap();
-        map.put(BRAND, "Apple");
-
-        return map;
-    }
-
     private boolean isRunningMacOS(Map<String, String> osDetails) {
 
         String osShortName = osDetails.get(SHORT_NAME);
         return StringUtils.isNotEmpty(osShortName) && APPLE_OS_LIST.contains(osShortName);
-    }
-
-    private boolean noBrandFound(Map<String, String> deviceDetails) {
-
-        return !deviceDetails.containsKey(BRAND);
-    }
-
-    private boolean isRunningTVBrowser(Map<String, String> clientDetails) {
-
-        String name = clientDetails.get(NAME);
-        return StringUtils.isNotBlank(name) && (name.equals("Kylo") || name.equals("Espial TV Browser"));
     }
 
     private boolean hasOperaTabletFragment(String userAgent) {
@@ -258,26 +287,9 @@ public final class DeviceDetectorParser {
         return ANDROID_PATTERN.matcher(userAgent).find();
     }
 
-    private boolean isMicrosoftTouch(Map<String, String> osDetails, String userAgent) {
-
-        String osShortName = osDetails.get(SHORT_NAME);
-        String osVersion = osDetails.get(VERSION);
-
-        return StringUtils.isNotBlank(osShortName) && (osShortName.equals("WRT")
-                || (osShortName.equals("WIN") && StringUtils.isNotEmpty(osVersion)
-                && new DefaultArtifactVersion(osVersion).compareTo(new DefaultArtifactVersion("8.0")) >= 0 && isTouch(userAgent)));
-    }
-
     private boolean isTouch(String userAgent) {
 
         return TOUCH_PATTERN.matcher(userAgent).find();
-    }
-
-    private boolean isDevicePhone(Map<String, String> deviceDetails) {
-
-        String type = deviceDetails.get(DEVICE_TYPE);
-
-        return StringUtils.isNotEmpty(type) && type.equals("feature phone");
     }
 
     private boolean isAndroid(Map<String, String> osDetails) {
@@ -286,7 +298,7 @@ public final class DeviceDetectorParser {
         return StringUtils.isNotBlank(osFamily) && osFamily.equals("Android");
     }
 
-    private boolean isMobile(String userAgent) {
+    private boolean hasAndroidMobileFragment(String userAgent) {
 
         return MOBILE_PATTERN.matcher(userAgent).find();
     }
@@ -299,23 +311,5 @@ public final class DeviceDetectorParser {
 
         String osFamily = osDetails.get(OS_FAMILY);
         return StringUtils.isNotEmpty(osFamily) && DESKTOP_OS_LIST.contains(osFamily);
-    }
-
-    private Map<String, String> createDeviceDetails(Map<String, String> deviceDetails, String userAgent, DeviceType type) {
-
-        Map<String, String> desktopMap = Maps.newHashMap();
-        Map<String, String> vendorResults = vendorFragmentsParser.parse(userAgent);
-        String vendor = null;
-        if (!vendorResults.isEmpty()) {
-            vendor = vendorResults.get(VENDOR);
-        }
-        if (!deviceDetails.isEmpty()) {
-            desktopMap.putAll(deviceDetails);
-        }
-        desktopMap.put(DEVICE_TYPE, type.getDeviceName());
-        if (StringUtils.isNotBlank(vendor)) {
-            desktopMap.put(BRAND, vendor);
-        }
-        return desktopMap;
     }
 }

@@ -34,6 +34,7 @@ CD=Chrome
 CE=Chrome
 CF=Chrome
 CG=Chrome
+HE=Chrome
 CH=Chrome
 CI=Chrome
 CL=Chrome

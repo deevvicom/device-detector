@@ -85,6 +85,14 @@
     name: 'Apple Inc'
     url: 'https://www.apple.com'
 
+- regex: "AppSignalBot"
+  name: "AppSignalBot"
+  category: "Site Monitor"
+  url: "https://docs.appsignal.com/uptime-monitoring/"
+  producer:
+    name: "AppSignal"
+    url: "https://appsignal.com/"
+
 - regex: 'Arachni'
   name: 'Arachni'
   category: 'Security Checker'
@@ -1643,6 +1651,14 @@
   name: 'Yahoo! Link Preview'
   category: 'Crawler'
   url: 'https://help.yahoo.com/kb/mail/yahoo-link-preview-SLN23615.html'
+  producer:
+    name: 'Yahoo! Inc.'
+    url: 'http://www.yahoo.com'
+
+- regex: 'YahooMailProxy'
+  name: 'Yahoo! Mail Proxy'
+  category: 'Service Agent'
+  url: 'https://help.yahoo.com/kb/yahoo-mail-proxy-SLN28749.html'
   producer:
     name: 'Yahoo! Inc.'
     url: 'http://www.yahoo.com'

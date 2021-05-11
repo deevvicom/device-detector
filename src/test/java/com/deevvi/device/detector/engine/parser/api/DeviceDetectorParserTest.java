@@ -32,6 +32,7 @@ public class DeviceDetectorParserTest {
 
         runTest("/complete/single-test-complete.yml");
        /// runTest("/complete/test-complete-unknown.yml");
+       // runTest("/complete/test-complete-desktop.yml");
     }
 
     @Test

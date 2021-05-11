@@ -4,6 +4,7 @@ import com.deevvi.device.detector.engine.parser.Parser;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import sun.net.www.ParseUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.deevvi.device.detector.engine.parser.Parser.checkContainsPlaceholder;
 import static java.lang.Integer.MAX_VALUE;
 
 /**
@@ -95,6 +97,9 @@ public final class ParserFacade implements Parser {
         Map<String, String> map = Maps.newHashMap(result);
         if (parserResult.getResult().size() > result.size()) {
             return parserResult.getResult();
+        }
+        if (checkContainsPlaceholder(map.getOrDefault(MODEL, EMPTY_STRING)) && !checkContainsPlaceholder(parserResult.getResult().getOrDefault(MODEL, EMPTY_STRING))) {
+            map.put(MODEL, parserResult.getResult().get(MODEL));
         }
         return map;
     }
