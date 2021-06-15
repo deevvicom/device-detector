@@ -11,7 +11,7 @@ If a valid user-agent is provided, then the following information is determined:
 ### Features
 * Over 200 types of bots
 * Almost 50 mobile applications
-* Over 700 brands
+* Almost 1000 brands
 * Almost 100 types of operating systems
 * Around 200 types of browsers
 * On average, it takes *12ms* to parse a user-agent
@@ -21,19 +21,19 @@ The recommended way to use this library is through your build tool.
 
 The device-detector artifact is published to Maven Central, using the group `com.deevvi`.
 
-Latest stable version is `1.5.0`.
+Latest stable version is `1.6.0`.
 
 Therefore,it can be added to your Gradle project by adding the dependencies:
 
 ```
-compile "com.deevvi:device-detector:1.5.0"
+compile "com.deevvi:device-detector:1.6.0"
 ```
 and in Maven:
 ```
 <dependency>
     <groupId>com.deevvi</groupId>
     <artifactId>device-detector</artifactId>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 

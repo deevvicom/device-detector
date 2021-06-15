@@ -98,7 +98,11 @@ public final class MobileParser implements Parser, MapLoader<Mobile> {
     }
 
     private Optional<String> buildModel(String model, Matcher matcher) {
-        return buildByMatcher(matcher, model).map(val -> Parser.clear(val).trim());
+        try {
+            return buildByMatcher(matcher, model).map(val -> Parser.clear(val).trim());
+        } catch (IndexOutOfBoundsException e) {
+            return Optional.empty();
+        }
     }
 
     private Optional<DeviceInfo> fetchInfo(Mobile mobile, String userAgent) {
