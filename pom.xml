@@ -6,7 +6,7 @@
 
     <groupId>com.deevvi</groupId>
     <artifactId>device-detector</artifactId>
-    <version>1.6.0</version>
+    <version>1.7.0</version>
 
     <name>Device detector</name>
     <description>The aim of this library is to fetch as much as possible information from a user-agent string.

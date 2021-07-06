@@ -16,6 +16,7 @@ import com.deevvi.device.detector.engine.parser.device.ConsoleParser;
 import com.deevvi.device.detector.engine.parser.device.MobileParser;
 import com.deevvi.device.detector.engine.parser.device.NotebookParser;
 import com.deevvi.device.detector.engine.parser.device.PortableMediaPlayerParser;
+import com.deevvi.device.detector.engine.parser.device.ShellTvParser;
 import com.deevvi.device.detector.engine.parser.device.TelevisionParser;
 import com.deevvi.device.detector.engine.parser.facade.ParserFacade;
 import com.deevvi.device.detector.engine.parser.facade.ParserPair;
@@ -104,12 +105,13 @@ public final class DeviceDetectorParser {
 
         List<ParserPair> parsers = Lists.newArrayList();
         parsers.add(new ParserPair(new TelevisionParser(), 1));
-        parsers.add(new ParserPair(new NotebookParser(), 2));
-        parsers.add(new ParserPair(new ConsoleParser(), 3));
-        parsers.add(new ParserPair(new CarParser(), 4));
-        parsers.add(new ParserPair(new CameraParser(), 5));
-        parsers.add(new ParserPair(new PortableMediaPlayerParser(), 6));
-        parsers.add(new ParserPair(new MobileParser(), 7));
+        parsers.add(new ParserPair(new ShellTvParser(), 2));
+        parsers.add(new ParserPair(new NotebookParser(), 3));
+        parsers.add(new ParserPair(new ConsoleParser(), 4));
+        parsers.add(new ParserPair(new CarParser(), 5));
+        parsers.add(new ParserPair(new CameraParser(), 6));
+        parsers.add(new ParserPair(new PortableMediaPlayerParser(), 7));
+        parsers.add(new ParserPair(new MobileParser(), 8));
         deviceParser = new ParserFacade(parsers);
 
         List<ParserPair> clientsList = Lists.newArrayList();
