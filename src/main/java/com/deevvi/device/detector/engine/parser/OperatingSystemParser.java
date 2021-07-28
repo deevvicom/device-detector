@@ -26,7 +26,7 @@ public final class OperatingSystemParser implements Parser, ListLoader<Operating
     /**
      * List with operating systems having name not capitalized.
      */
-    private static final Set<String> notCapitalizedOS = ImmutableSet.of("", "iOS", "webOS", "palmOS","watchOS");
+    private static final Set<String> notCapitalizedOS = ImmutableSet.of("", "iOS", "webOS", "palmOS","watchOS", "iPadOS");
 
     /**
      * Regexes for OS platforms.
