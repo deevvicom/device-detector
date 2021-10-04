@@ -77,15 +77,21 @@ public class DeviceDetectorParserTest {
         runTest("/complete/test-complete-smartphone-21.yml");
         runTest("/complete/test-complete-smartphone-22.yml");
         runTest("/complete/test-complete-smartphone-23.yml");
+        runTest("/complete/test-complete-smartphone-24.yml");
+        runTest("/complete/test-complete-smartphone-25.yml");
+        runTest("/complete/test-complete-smartphone-26.yml");
 
         runTest("/complete/test-complete-tablet.yml");
         runTest("/complete/test-complete-tablet-1.yml");
         runTest("/complete/test-complete-tablet-2.yml");
         runTest("/complete/test-complete-tablet-3.yml");
         runTest("/complete/test-complete-tablet-4.yml");
+        runTest("/complete/test-complete-tablet-5.yml");
+        runTest("/complete/test-complete-tablet-6.yml");
 
         runTest("/complete/test-complete-tv.yml");
         runTest("/complete/test-complete-tv-1.yml");
+
         runTest("/complete/test-complete-unknown.yml");
         runTest("/complete/test-complete-wearable.yml");
     }
@@ -101,7 +107,7 @@ public class DeviceDetectorParserTest {
                     Map map = (Map) obj;
                     String userAgent = (String) map.get("user_agent");
 
-                    System.out.println("Test no: " + index.getAndIncrement() + " --> " + userAgent);
+                    System.out.println("File: " + path + "/Test no: " + index.getAndIncrement() + " --> " + userAgent);
                     DeviceDetectorResult result = deviceDetectorParser.parse(userAgent);
                     if (!result.found()) {
                         fail("Unable to parse user agent: " + userAgent);

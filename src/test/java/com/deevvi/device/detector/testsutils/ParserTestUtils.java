@@ -98,6 +98,8 @@ public class ParserTestUtils {
             key = "shortName";
         } else if (entry.getKey().equals("brand")) {
             key = "brand";
+        } else if (entry.getKey().equals("family")) {
+            key = "osFamily";
         } else {
             key = (String) entry.getKey();
         }

@@ -1,16 +1,16 @@
 -
-  user_agent: 'Mozilla/5.0 (iPad; CPU OS 13_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 [FBAN/FBIOS;FBDV/iPad5,1;FBMD/iPad;FBSN/iOS;FBSV/13.5;FBSS/2;FBCR/;FBID/tablet;FBLC/fr_FR;FBOP/5]'
+  user_agent: XBMC/PRE-11.0 Git:20110623-62171b3 (iOS; 11.0.0 AppleTV2,1; http://www.xbmc.org)
   os:
-    name: iPadOS
-    version: "13.5"
-    platform: ""
+    name: tvOS
+    version: 11.0.0
+    platform: ARM
   client:
-    type: mobile app
-    name: Facebook
+    type: mediaplayer
+    name: XBMC
     version: ""
   device:
-    type: tablet
+    type: tv
     brand: Apple
-    model: iPad Mini 4
+    model: Apple TV 2
   os_family: iOS
   browser_family: Unknown

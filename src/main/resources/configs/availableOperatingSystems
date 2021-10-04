@@ -1,7 +1,7 @@
 AIX=AIX
 Android=AND
 AmigaOS=AMG
-Apple TV=ATV
+tvOS=ATV
 Arch Linux=ARL
 BackTrack=BTR
 Bada=SBA
@@ -27,6 +27,7 @@ FydeOS=FYD
 Gentoo=GNT
 Google TV=GTV
 HP-UX=HPX
+HarmonyOS=HAR
 HasCodingOS=HAS
 Haiku OS=HAI
 IRIX=IRI

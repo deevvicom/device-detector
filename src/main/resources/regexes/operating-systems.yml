@@ -33,12 +33,6 @@
   name: 'Tizen'
   version: '$1'
 
-##########
-## Sailfish OS
-###########
-- regex: 'Sailfish|Jolla'
-  name: 'Sailfish OS'
-  version: ''
 
 ##########
 # YunOS (Android based)
@@ -95,6 +89,10 @@
 ##########
 # Custom Android Roms
 ##########
+- regex: 'HarmonyOS(?:[/ ](\d+[\.\d]+))?'
+  name: 'HarmonyOS'
+  version: '$1'
+
 - regex: 'RazoDroiD(?: v(\d+[\.\d]*))?'
   name: 'RazoDroiD'
   version: '$1'
@@ -178,6 +176,13 @@
 - regex: 'Linux; diordnA[; ](\d+[\.\d]*)'
   name: 'Android'
   version: '$1'
+
+##########
+## Sailfish OS
+###########
+- regex: 'Sailfish|Jolla'
+  name: 'Sailfish OS'
+  version: ''
 
 ##########
 # AmigaOS
@@ -401,6 +406,17 @@
 - regex: 'Haiku'
   name: 'Haiku OS'
   version: ''
+
+##########
+# tvOS (https://developer.apple.com/tvos/)
+##########
+- regex: 'Apple TV.*CPU (?:iPhone )?OS ((?:9|1[0-5])_\d+(?:[_\.]\d+)*)'
+  name: 'tvOS'
+  version: '$1'
+
+- regex: 'iOS(?:; |/)((?:9|1[0-5]).\d+(?:[_\.]\d+)*) (?:model/)?AppleTV'
+  name: 'tvOS'
+  version: '$1'
 
 ##########
 # watchOS (https://developer.apple.com/watchos/)
@@ -679,7 +695,7 @@
   name: 'iOS'
   version: ''
 
-- regex: 'iTunes-(iPod|iPad|iPhone)/(?:[\d\.]+)'
+- regex: 'iTunes-(AppleTV|iPod|iPad|iPhone)/(?:[\d\.]+)'
   name: 'iOS'
   version: ''
 
@@ -1074,7 +1090,6 @@
 - regex: 'WebTV/(\d+[\.\d]+)'
   name: 'WebTV'
   version: '$1'
-
 
 ##########
 # Remix OS

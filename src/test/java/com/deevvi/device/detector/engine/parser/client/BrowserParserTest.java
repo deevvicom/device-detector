@@ -53,12 +53,11 @@ public class BrowserParserTest {
                                 .forEach(entry -> {
                                     String value = extractValue(entry.getValue());
                                     if (StringUtils.isNotBlank(value)) {
-                                        assertThat(parseResult.get(getKeyFromResult(entry))).ignoringCase().isEqualTo(value);
+                                        assertThat(parseResult.get(getKey(entry))).ignoringCase().isEqualTo(value);
                                     }
                                 });
                     }
                 });
-
     }
 
     //Single test, useful for debugging
@@ -78,7 +77,7 @@ public class BrowserParserTest {
             Map.Entry entry = (Map.Entry) entryObject;
             String value = extractValue(entry.getValue());
             if (StringUtils.isNotBlank(value)) {
-                assertThat(value).isEqualTo(json.get(getKeyFromResult(entry)));
+                assertThat(value).isEqualTo(json.get(getKey(entry)));
             }
         }
 
@@ -123,6 +122,13 @@ public class BrowserParserTest {
         testWithFile("/complete/test-complete-unknown.yml");
     }
 
+    private String getKey(Map.Entry entry){
+        if (entry.getKey().equals("family")) {
+            return "browserFamily";
+        }
+        return getKeyFromResult(entry);
+    }
+
     private void testWithFile(String filePath) throws IOException {
         System.out.println("Test browser parser with file: " + filePath);
         final AtomicInteger index = new AtomicInteger(1);
@@ -145,7 +151,7 @@ public class BrowserParserTest {
                                         .forEach(entry -> {
                                             String value = extractValue(entry.getValue());
                                             if (StringUtils.isNotBlank(value)) {
-                                                assertThat(parseResult.get(getKeyFromResult(entry))).isEqualTo(value);
+                                                assertThat(parseResult.get(getKey(entry))).isEqualTo(value);
                                             }
                                         });
                             }
