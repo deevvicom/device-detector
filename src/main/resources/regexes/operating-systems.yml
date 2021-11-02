@@ -1070,6 +1070,13 @@
   version: '$1'
 
 ##########
+# REX
+##########
+- regex: 'REX; U;'
+  name: 'REX'
+  version: ''
+
+##########
 # Brew
 ##########
 - regex: '(?:Brew(?!-Applet)(?: MP)?|BMP)(?:[ /](\d+[\.\d]+))?'
@@ -1164,7 +1171,6 @@
   name: 'Xbox'
   version: '360'
 
-
 ##########
 # Mobile Gaming Console
 ##########
@@ -1175,7 +1181,6 @@
 - regex: 'PlayStation ((?:Portable|Vita))'
   name: 'PlayStation Portable'
   version: '$1'
-
 
 ##########
 # IBM
@@ -1189,4 +1194,11 @@
 ###########
 - regex: 'Linux(?:OS)?[^a-z]|Cinnamon/(?:\d+[\.\d]+)'
   name: 'GNU/Linux'
+  version: ''
+
+##########
+# Java ME (Java Platform, Micro Edition)
+##########
+- regex: 'Java ME|(J2ME|Profile)/MIDP|MIDP-(?:\d+[\.\d]+)/CLDC|Configuration/CLDC|Java; U; MIDP|MMP/\d.\d'
+  name: 'Java ME'
   version: ''

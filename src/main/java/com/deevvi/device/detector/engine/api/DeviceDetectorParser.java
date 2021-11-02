@@ -63,8 +63,8 @@ public final class DeviceDetectorParser {
     private static final Pattern TOUCH_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Touch)", CASE_INSENSITIVE);
     private static final Pattern ANDROID_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Android( [\\.0-9]+)?; Tablet;)", CASE_INSENSITIVE);
     private static final Pattern OPERA_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Opera Tablet)", CASE_INSENSITIVE);
-    private static final Pattern CHROME_SMARTPHONE_PATTERN = Pattern.compile("(?:^|[^A-Z_-])Chrome/[\\.0-9]* (?:Mobile|eliboM)", CASE_INSENSITIVE);
-    private static final Pattern CHROME_TABLET_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]* (?!Mobile))", CASE_INSENSITIVE);
+    private static final Pattern SAFARI_SMARTPHONE_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Mobile|eliboM) Safari", CASE_INSENSITIVE);
+    private static final Pattern SAFARI_TABLET_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?!Mobile )Safari", CASE_INSENSITIVE);
     private static final Pattern CHROME_PATTERN = Pattern.compile("(?:^|[^A-Z_-])(?:Chrome/[\\.0-9]*)", CASE_INSENSITIVE);
     private static final Pattern SMART_TV_OR_TIZIEN_TV = Pattern.compile("(?:^|[^A-Z_-])(SmartTV|Tizen.+ TV .+$)", CASE_INSENSITIVE);
     private static final Pattern OPERA_TV_STORE = Pattern.compile("(?:^|[^A-Z_-])(?:Opera TV Store)", CASE_INSENSITIVE);
@@ -177,9 +177,9 @@ public final class DeviceDetectorParser {
 
         if (noDeviceTypeDetected(deviceDetails)) {
             if (isAndroid(osDetails) && hasChromePattern(userAgent)) {
-                if (isChromeSmartphone(userAgent)) {
+                if (isSafariSmartphone(userAgent)) {
                     deviceDetails.put(DEVICE_TYPE, SMARTPHONE.getDeviceName());
-                } else if (isChromeTablet(userAgent)) {
+                } else if (isSafariTablet(userAgent)) {
                     deviceDetails.put(DEVICE_TYPE, TABLET.getDeviceName());
                 }
             } else if ((hasAndroidTableFragment(userAgent) || hasOperaTabletFragment(userAgent))) {
@@ -204,6 +204,9 @@ public final class DeviceDetectorParser {
             deviceDetails.put(DEVICE_TYPE, SMARTPHONE.getDeviceName());
         }
         String osName = osDetails.getOrDefault(NAME, EMPTY_STRING);
+        if(osName.equals("Java ME") && deviceDetails.isEmpty()){
+            deviceDetails.put(DEVICE_TYPE, FEATURE_PHONE.getDeviceName());
+        }
         if (noDeviceTypeDetected(deviceDetails) && (osName.equals("Windows RT") || (osName.equals("Windows")
                 && new DefaultArtifactVersion(osDetails.getOrDefault(VERSION, "0")).compareTo(new DefaultArtifactVersion("8.0")) >= 0
                 && isTouch(userAgent)))) {
@@ -248,12 +251,12 @@ public final class DeviceDetectorParser {
         return CHROME_PATTERN.matcher(userAgent).find();
     }
 
-    private boolean isChromeTablet(String userAgent) {
-        return CHROME_TABLET_PATTERN.matcher(userAgent).find();
+    private boolean isSafariTablet(String userAgent) {
+        return SAFARI_TABLET_PATTERN.matcher(userAgent).find();
     }
 
-    private boolean isChromeSmartphone(String userAgent) {
-        return CHROME_SMARTPHONE_PATTERN.matcher(userAgent).find();
+    private boolean isSafariSmartphone(String userAgent) {
+        return SAFARI_SMARTPHONE_PATTERN.matcher(userAgent).find();
     }
 
     private boolean noDeviceTypeDetected(Map<String, String> deviceDetails) {
