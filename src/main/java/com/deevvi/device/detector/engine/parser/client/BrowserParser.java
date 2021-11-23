@@ -110,7 +110,7 @@ public final class BrowserParser implements Parser, ListLoader<Browser> {
 
         return new Browser.Builder()
                 .withName(String.valueOf(map.get(NAME)))
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withVersion(String.valueOf(map.get(VERSION)))
                 .withEngine(engineMap)
                 .build();

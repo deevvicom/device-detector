@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * Model for bots.
  */
-public final class Bot {
+public final class Bot implements PatternBuilder {
 
     private final Pattern pattern;
     private final String name;
@@ -20,12 +20,12 @@ public final class Bot {
     /**
      * Constructor.
      */
-    private Bot(Pattern pattern, String name, String category, String url, String producerName, String producerUrl) {
+    private Bot( String rawRegex, String name, String category, String url, String producerName, String producerUrl) {
 
-        Preconditions.checkNotNull(pattern, "Regex pattern cannot be null or empty.");
+        Preconditions.checkNotNull(StringUtils.trimToNull(rawRegex), "Raw regex cannot be null or empty.");
         Preconditions.checkNotNull(StringUtils.trimToNull(name), "Operating system name cannot be null or empty.");
 
-        this.pattern = pattern;
+        this.pattern = toPattern(rawRegex);
         this.name = name;
         this.category = category;
         this.url = url;
@@ -68,16 +68,16 @@ public final class Bot {
      */
     public static class Builder {
 
-        private Pattern pattern;
+        private String rawRegex;
         private String name;
         private String category;
         private String url;
         private String producerName;
         private String producerUrl;
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -113,7 +113,7 @@ public final class Bot {
 
         public Bot build() {
 
-            return new Bot(pattern, name, category, url, producerName, producerUrl);
+            return new Bot(rawRegex, name, category, url, producerName, producerUrl);
         }
     }
 }

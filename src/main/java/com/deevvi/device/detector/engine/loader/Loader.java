@@ -7,17 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.regex.Pattern;
-
 import static com.google.common.base.Charsets.UTF_8;
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
 public interface Loader {
-
-    /**
-     * Template used for building patterns from a regex.
-     */
-    String REGEX_PATTERN = "(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:%s)";
 
     /**
      * Class logger.
@@ -50,16 +42,5 @@ public interface Loader {
         } catch (Exception e) {
             throw new DeviceDetectorException(String.format("Unable to read config %s file. Invalid file handler.", filePath));
         }
-    }
-
-    /**
-     * Convert a string to a compiled pattern, using the {@link Loader.REGEX_PATTERN} format.
-     *
-     * @param rawRegex regex, as string
-     * @return pattern
-     */
-    default Pattern toPattern(String rawRegex) {
-
-        return Pattern.compile(String.format(REGEX_PATTERN, rawRegex.replaceAll("/", "\\\\" + "/")), CASE_INSENSITIVE);
     }
 }

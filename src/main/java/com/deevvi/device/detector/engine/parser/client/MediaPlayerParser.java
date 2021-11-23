@@ -47,7 +47,7 @@ public final class MediaPlayerParser extends ClientParser implements ListLoader<
         Map<String, Object> map = (Map) rawObject;
         return new MediaPlayer.Builder()
                 .withName((String) map.get(NAME))
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withVersion((String) map.get(VERSION))
                 .build();
     }

@@ -1,7 +1,5 @@
 package com.deevvi.device.detector.model.client;
 
-import java.util.regex.Pattern;
-
 /**
  * Model for mobile application parser.
  */
@@ -10,9 +8,9 @@ public class MobileApp extends Client {
     /**
      * Constructor.
      */
-    private MobileApp(String name, Pattern pattern, String version) {
+    private MobileApp(String name, String rawRegex, String version) {
 
-       super(name, pattern, version);
+       super(name, rawRegex, version);
     }
 
     /**
@@ -20,7 +18,7 @@ public class MobileApp extends Client {
      */
     public static class Builder {
         private String name;
-        private Pattern pattern;
+        private String rawRegex;
         private String version;
 
         public Builder() {
@@ -32,9 +30,9 @@ public class MobileApp extends Client {
             return this;
         }
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -47,7 +45,7 @@ public class MobileApp extends Client {
 
         public MobileApp build() {
 
-            return new MobileApp(name, pattern, version);
+            return new MobileApp(name, rawRegex, version);
         }
     }
 }

@@ -47,7 +47,7 @@ public final class MobileAppParser extends ClientParser implements ListLoader<Mo
         Map<String, Object> map = (Map) rawObject;
         return new MobileApp.Builder()
                 .withName((String) map.get(NAME))
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withVersion((String) map.get(VERSION))
                 .build();
     }

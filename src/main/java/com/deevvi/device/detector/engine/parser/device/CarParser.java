@@ -2,7 +2,9 @@ package com.deevvi.device.detector.engine.parser.device;
 
 import com.deevvi.device.detector.engine.loader.MapLoader;
 import com.deevvi.device.detector.engine.parser.Parser;
+import com.deevvi.device.detector.model.Model;
 import com.deevvi.device.detector.model.device.Car;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.deevvi.device.detector.engine.parser.device.DeviceType.CAR_BROWSER;
 
@@ -46,17 +47,17 @@ public final class CarParser implements Parser, MapLoader<Car> {
     public Car toObject(String key, Object value) {
 
         Map map = (Map) value;
-        Map<Pattern, String> models = Maps.newLinkedHashMap();
+        List<Model> models = Lists.newArrayList();
         if (map.containsKey(MODELS)) {
             ((List) map.get(MODELS)).forEach(obj -> {
                 Map modelEntry = (Map) obj;
-                models.put(toPattern((String) modelEntry.get(REGEX)), (String) modelEntry.get(MODEL));
+                models.add(new Model ((String) modelEntry.get(REGEX), (String) modelEntry.get(MODEL)));
             });
         }
 
         return new Car.Builder()
                 .withDevice((String) map.get(DEVICE))
-                .withRegex(toPattern(((String) map.get(REGEX))))
+                .withRegex(((String) map.get(REGEX)))
                 .withBrand(key)
                 .withModels(models)
                 .build();
@@ -72,10 +73,10 @@ public final class CarParser implements Parser, MapLoader<Car> {
 
     private Optional<String> buildModel(Car car, String userAgent) {
 
-        for (Map.Entry<Pattern, String> entry : car.getModels().entrySet()) {
-            Matcher modelMatcher = entry.getKey().matcher(userAgent);
+        for(Model model: car.getModels()){
+            Matcher modelMatcher = model.getPattern().matcher(userAgent);
             if (modelMatcher.find()) {
-                return Optional.of(entry.getValue());
+                return Optional.of(model.getModel());
             }
         }
 

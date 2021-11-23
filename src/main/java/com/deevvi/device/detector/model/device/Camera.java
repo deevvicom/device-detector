@@ -1,7 +1,8 @@
 package com.deevvi.device.detector.model.device;
 
-import java.util.Map;
-import java.util.regex.Pattern;
+import com.deevvi.device.detector.model.Model;
+
+import java.util.List;
 
 /**
  * Model for camera parser.
@@ -11,9 +12,9 @@ public final class Camera extends Device {
     /**
      * Constructor.
      */
-    private Camera(Pattern pattern, String device, String model, String brand, Map<Pattern, String> models) {
+    private Camera(String rawRegex, String device, String model, String brand, List<Model> models) {
 
-        super(pattern, device, model, brand, models);
+        super(rawRegex, device, model, brand, models);
     }
 
     /**
@@ -21,15 +22,15 @@ public final class Camera extends Device {
      */
     public static class Builder {
 
-        private Pattern pattern;
+        private String rawRegex;
         private String device;
         private String model;
         private String brand;
-        private Map<Pattern, String> models;
+        private List<Model> models;
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -51,7 +52,7 @@ public final class Camera extends Device {
             return this;
         }
 
-        public Builder withModels(Map<Pattern, String> models) {
+        public Builder withModels(List<Model> models) {
 
             this.models = models;
             return this;
@@ -59,7 +60,7 @@ public final class Camera extends Device {
 
         public Camera build() {
 
-            return new Camera(pattern, device, model, brand, models);
+            return new Camera(rawRegex, device, model, brand, models);
         }
     }
 }

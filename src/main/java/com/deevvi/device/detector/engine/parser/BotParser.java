@@ -20,7 +20,6 @@ public final class BotParser implements Parser, ListLoader<Bot> {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public Map<String, String> parse(String userAgent) {
@@ -34,7 +33,6 @@ public final class BotParser implements Parser, ListLoader<Bot> {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public Bot toObject(Object rawObject) {
@@ -53,7 +51,7 @@ public final class BotParser implements Parser, ListLoader<Bot> {
         }
 
         return new Bot.Builder()
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withName(name)
                 .withCategory(category)
                 .withUrl(url)
@@ -65,7 +63,6 @@ public final class BotParser implements Parser, ListLoader<Bot> {
 
     /**
      * {@inheritDoc}
-     *
      */
     @Override
     public String getFilePath() {

@@ -1,7 +1,9 @@
 package com.deevvi.device.detector.model.device;
 
+import com.deevvi.device.detector.model.PatternBuilder;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -17,9 +19,9 @@ public final class Mobile extends BasicDevice {
     /**
      * Constructor.
      */
-    private Mobile(Pattern pattern, String device, String model, String brand, List<Model> models) {
+    private Mobile(String rawRegex, String device, String model, String brand, List<Model> models) {
 
-        super(pattern, device, brand);
+        super(rawRegex, device, brand);
         this.model = model;
         this.models = models;
     }
@@ -37,18 +39,17 @@ public final class Mobile extends BasicDevice {
      */
     public static class Builder {
 
-        private Pattern pattern;
+        private String rawRegex;
         private String device;
         private String model;
         private String brand;
         private List<Model> models;
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
-
         public Builder withDevice(String device) {
 
             this.device = device;
@@ -86,22 +87,22 @@ public final class Mobile extends BasicDevice {
 
         public Mobile build() {
 
-            return new Mobile(pattern, device, model, brand, models);
+            return new Mobile(rawRegex, device, model, brand, models);
         }
     }
 
-    public static class Model {
+    public static class Model implements PatternBuilder {
 
         private final Pattern pattern;
         private final String device;
         private final String model;
         private final String brand;
 
-        public Model(Pattern pattern, String device, String model, String brand) {
+        public Model(String rawRegex, String device, String model, String brand) {
 
-            Preconditions.checkNotNull(pattern, "Regex pattern cannot be null.");
+            Preconditions.checkNotNull(StringUtils.trimToNull(rawRegex), "Raw regex cannot be null or empty.");
 
-            this.pattern = pattern;
+            this.pattern = toPattern(rawRegex);
             this.device = device;
             this.model = model;
             this.brand = brand;

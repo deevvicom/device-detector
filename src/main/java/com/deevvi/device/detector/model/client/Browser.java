@@ -3,7 +3,6 @@ package com.deevvi.device.detector.model.client;
 import com.google.common.base.Preconditions;
 
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Model for browser parser.
@@ -18,9 +17,9 @@ public final class Browser extends Client {
     /**
      * Constructor.
      */
-    private Browser(String name, Pattern pattern, String version, Map<String, String> engines) {
+    private Browser(String name, String rawRegex, String version, Map<String, String> engines) {
 
-        super(name, pattern, version);
+        super(name, rawRegex, version);
         Preconditions.checkNotNull(engines, "Engines map cannot be null or empty.");
         this.engines = engines;
     }
@@ -40,7 +39,7 @@ public final class Browser extends Client {
      */
     public static class Builder {
         private String name;
-        private Pattern pattern;
+        private String rawRegex;
         private String version;
         private Map<String, String> engine;
 
@@ -53,9 +52,9 @@ public final class Browser extends Client {
             return this;
         }
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -73,7 +72,7 @@ public final class Browser extends Client {
 
         public Browser build() {
 
-            return new Browser(name, pattern, version, engine);
+            return new Browser(name, rawRegex, version, engine);
         }
     }
 }

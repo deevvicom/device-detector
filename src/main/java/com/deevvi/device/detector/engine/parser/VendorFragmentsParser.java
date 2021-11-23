@@ -1,6 +1,7 @@
 package com.deevvi.device.detector.engine.parser;
 
 import com.deevvi.device.detector.engine.loader.MapLoader;
+import com.deevvi.device.detector.model.PatternBuilder;
 import com.deevvi.device.detector.model.VendorFragments;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -15,7 +16,7 @@ import static java.util.regex.Pattern.CASE_INSENSITIVE;
 /**
  * Parser to determine the vendor fragments.
  */
-public final class VendorFragmentsParser implements Parser, MapLoader<VendorFragments> {
+public final class VendorFragmentsParser implements Parser, PatternBuilder, MapLoader<VendorFragments> {
 
     /**
      * List with vendor fragments models.

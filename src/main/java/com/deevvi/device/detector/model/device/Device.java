@@ -1,5 +1,8 @@
 package com.deevvi.device.detector.model.device;
 
+import com.deevvi.device.detector.model.Model;
+
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -13,9 +16,9 @@ public class Device extends BasicDeviceWithModels {
     /**
      * Constructor.
      */
-    public Device(Pattern pattern, String device, String model, String brand, Map<Pattern, String> models) {
+    public Device(String rawRegex, String device, String model, String brand, List<Model> models) {
 
-        super(pattern, device, brand, models);
+        super(rawRegex, device, brand, models);
         this.model = model;
     }
 

@@ -81,7 +81,7 @@ public final class MobileParser implements Parser, MapLoader<Mobile> {
                 }
 
                 models.add(new Mobile.Model(
-                        toPattern((String) (modelMap.get(REGEX))),
+                        (String) (modelMap.get(REGEX)),
                         specificDevice,
                         specificModel,
                         specificBrand));
@@ -90,7 +90,7 @@ public final class MobileParser implements Parser, MapLoader<Mobile> {
 
         return new Mobile.Builder()
                 .withDevice(device)
-                .withPattern(toPattern(regex))
+                .withRawRegex(regex)
                 .withModel(model)
                 .withBrand(key)
                 .withModels(models)

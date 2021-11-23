@@ -1,8 +1,9 @@
 package com.deevvi.device.detector.model.device;
 
 
-import java.util.Map;
-import java.util.regex.Pattern;
+import com.deevvi.device.detector.model.Model;
+
+import java.util.List;
 
 /**
  * Model for cars parser.
@@ -12,9 +13,9 @@ public final class Car extends BasicDeviceWithModels {
     /**
      * Constructor.
      */
-    private Car(Pattern pattern, String device, String brand, Map<Pattern, String> models) {
+    private Car(String rawRegex, String device, String brand, List<Model> models) {
 
-        super(pattern, device, brand, models);
+        super(rawRegex, device, brand, models);
     }
 
     /**
@@ -22,14 +23,14 @@ public final class Car extends BasicDeviceWithModels {
      */
     public static class Builder {
 
-        private Pattern regex;
+        private String rawRegex;
         private String device;
         private String brand;
-        private Map<Pattern, String> models;
+        private List<Model> models;
 
-        public Builder withRegex(Pattern regex) {
+        public Builder withRegex(String rawRegex) {
 
-            this.regex = regex;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -45,7 +46,7 @@ public final class Car extends BasicDeviceWithModels {
             return this;
         }
 
-        public Builder withModels(Map<Pattern, String> models) {
+        public Builder withModels(List<Model> models) {
 
             this.models = models;
             return this;
@@ -53,7 +54,7 @@ public final class Car extends BasicDeviceWithModels {
 
         public Car build() {
 
-            return new Car(regex, device, brand, models);
+            return new Car(rawRegex, device, brand, models);
         }
     }
 }

@@ -1,18 +1,23 @@
 package com.deevvi.device.detector.engine.parser;
 
+import com.deevvi.device.detector.model.PatternBuilder;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 
 /**
  * Model for parsing an input to generate gadget details.
  */
-public interface Parser {
+public interface Parser extends PatternBuilder {
 
     /**
      * Parse the input and return the response as a JSON.
@@ -82,10 +87,6 @@ public interface Parser {
         return index;
     }
 
-    default boolean startWithPattern(String model) {
-        return model.startsWith("$");
-    }
-
     default Optional<String> buildModelWithPattern(Matcher matcher, String model) {
 
         int index = getStartIndex(model);
@@ -144,6 +145,11 @@ public interface Parser {
 
     default String capitalize(String raw) {
         return StringUtils.isEmpty(raw) ? raw : Character.toUpperCase(raw.charAt(0)) + raw.substring(1);
+    }
+
+    default boolean preMatchOverall(List<String> regexes, String userAgent) {
+        Pattern pattern = toPattern(Joiner.on("|").join(Lists.reverse(regexes)));
+        return pattern.matcher(userAgent).find();
     }
 
     Pattern TEMPLATE_PATTERN = Pattern.compile("\\$[0-9]", CASE_INSENSITIVE);

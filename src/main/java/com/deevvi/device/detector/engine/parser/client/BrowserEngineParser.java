@@ -43,9 +43,10 @@ public final class BrowserEngineParser implements Parser, ListLoader<BrowserEngi
     public BrowserEngine toObject(Object rawObject) {
 
         Map<String, String> map = (Map) rawObject;
+        String rawRegex = map.get(REGEX);
         return new BrowserEngine.Builder()
                 .withName(map.get(NAME))
-                .withPattern(toPattern(map.get(REGEX)))
+                .withRawRegex(rawRegex)
                 .build();
     }
 

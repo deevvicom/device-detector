@@ -1,7 +1,9 @@
 package com.deevvi.device.detector.model.device;
 
+import com.deevvi.device.detector.model.Model;
 import com.google.common.base.Preconditions;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -13,14 +15,14 @@ public class BasicDeviceWithModels extends BasicDevice {
     /**
      * Map with device models along with compiled regexes for that model.
      */
-    private final Map<Pattern, String> models;
+    private final List<Model> models;
 
     /**
      * Constructor.
      */
-    public BasicDeviceWithModels(Pattern pattern, String device, String brand, Map<Pattern, String> models) {
+    public BasicDeviceWithModels(String rawRegex, String device, String brand, List<Model> models) {
 
-        super(pattern, device, brand);
+        super(rawRegex, device, brand);
         Preconditions.checkNotNull(models, "Models map cannot be null.");
         this.models = models;
     }
@@ -30,7 +32,7 @@ public class BasicDeviceWithModels extends BasicDevice {
      *
      * @return map with models
      */
-    public Map<Pattern, String> getModels() {
+    public List<Model> getModels() {
         return models;
     }
 }

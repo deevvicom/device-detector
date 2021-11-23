@@ -33,7 +33,7 @@ public final class ShellTvParser implements Parser, MapLoader<ShellTv> {
         return new ShellTv.Builder()
                 .withDevice((String) map.get(DEVICE))
                 .withBrand(key)
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withModel((String) map.getOrDefault(MODEL, EMPTY_STRING))
                 .build();
     }

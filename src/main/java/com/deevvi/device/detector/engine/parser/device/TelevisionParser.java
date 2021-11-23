@@ -2,7 +2,9 @@ package com.deevvi.device.detector.engine.parser.device;
 
 import com.deevvi.device.detector.engine.loader.MapLoader;
 import com.deevvi.device.detector.engine.parser.Parser;
+import com.deevvi.device.detector.model.Model;
 import com.deevvi.device.detector.model.device.Television;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 
@@ -53,11 +55,11 @@ public final class TelevisionParser implements Parser, MapLoader<Television> {
 
         for (Television television : televisions) {
             if (!television.getModels().isEmpty()) {
-                for (Map.Entry<Pattern, String> entry : television.getModels().entrySet()) {
-                    Matcher modelMatcher = entry.getKey().matcher(userAgent);
+                for(Model model:television.getModels()){
+                    Matcher modelMatcher = model.getPattern().matcher(userAgent);
                     if (modelMatcher.find()) {
 
-                        return toMap(television.getBrand(), Optional.of(entry.getValue()));
+                        return toMap(television.getBrand(), Optional.of(model.getModel()));
                     }
                 }
             }
@@ -81,17 +83,17 @@ public final class TelevisionParser implements Parser, MapLoader<Television> {
     @Override
     public Television toObject(String key, Object value) {
         Map map = (Map) value;
-        Map<Pattern, String> models = Maps.newLinkedHashMap();
+        List<Model> models = Lists.newArrayList();
         if (map.containsKey(MODELS)) {
             ((List) map.get(MODELS)).forEach(obj -> {
                 Map modelEntry = (Map) obj;
-                models.put(toPattern((String) modelEntry.get(REGEX)), (String) modelEntry.get(MODEL));
+                models.add(new Model((String) modelEntry.get(REGEX), (String) modelEntry.get(MODEL)));
             });
         }
 
         return new Television.Builder()
                 .withDevice((String) map.get(DEVICE))
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withModel((String) map.getOrDefault(MODEL, EMPTY_STRING))
                 .withBrand(key)
                 .withModels(models)
@@ -113,11 +115,11 @@ public final class TelevisionParser implements Parser, MapLoader<Television> {
             return buildModelWithPattern(matcher, television.getModel());
         } else {
             if (!television.getModels().isEmpty()) {
-                for (Map.Entry<Pattern, String> entry : television.getModels().entrySet()) {
-                    Matcher modelMatcher = entry.getKey().matcher(userAgent);
+                for (Model model: television.getModels()){
+                    Matcher modelMatcher = model.getPattern().matcher(userAgent);
                     if (modelMatcher.find()) {
 
-                        return buildModelWithPattern(modelMatcher, entry.getValue());
+                        return buildModelWithPattern(modelMatcher, model.getModel());
                     }
                 }
             }

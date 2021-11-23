@@ -1,5 +1,9 @@
 package com.deevvi.device.detector.model.device;
 
+import com.deevvi.device.detector.model.Model;
+import com.deevvi.device.detector.model.client.BrowserEngine;
+
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -11,9 +15,9 @@ public final class Television extends Device {
     /**
      * Constructor.
      */
-    private Television(Pattern pattern, String device, String model, String brand, Map<Pattern, String> models) {
+    private Television(String rawString, String device, String model, String brand, List<Model> models) {
 
-        super(pattern, device, model, brand, models);
+        super(rawString, device, model, brand, models);
     }
 
     /**
@@ -21,15 +25,15 @@ public final class Television extends Device {
      */
     public static class Builder {
 
-        private Pattern pattern;
+        private  String rawRegex;
         private String device;
         private String model;
         private String brand;
-        private Map<Pattern, String> models;
+        private List<Model> models;
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -51,7 +55,7 @@ public final class Television extends Device {
             return this;
         }
 
-        public Builder withModels(Map<Pattern, String> models) {
+        public Builder withModels(List<Model> models) {
 
             this.models = models;
             return this;
@@ -59,7 +63,7 @@ public final class Television extends Device {
 
         public Television build() {
 
-            return new Television(pattern, device, model, brand, models);
+            return new Television(rawRegex, device, model, brand, models);
         }
     }
 }

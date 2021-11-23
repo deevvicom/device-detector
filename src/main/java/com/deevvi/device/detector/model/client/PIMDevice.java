@@ -1,7 +1,5 @@
 package com.deevvi.device.detector.model.client;
 
-import java.util.regex.Pattern;
-
 /**
  * Model for personal information manager parser.
  */
@@ -10,9 +8,9 @@ public final class PIMDevice extends Client{
     /**
      * Constructor.
      */
-    private PIMDevice(String name, Pattern pattern, String version) {
+    private PIMDevice(String name, String rawRegex, String version) {
 
-        super(name, pattern, version);
+        super(name, rawRegex, version);
     }
 
     /**
@@ -21,7 +19,7 @@ public final class PIMDevice extends Client{
     public static class Builder {
 
         private String name;
-        private Pattern pattern;
+        private String rawRegex;
         private String version;
 
         public Builder() {
@@ -33,9 +31,9 @@ public final class PIMDevice extends Client{
             return this;
         }
 
-       public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -48,7 +46,7 @@ public final class PIMDevice extends Client{
 
         public PIMDevice build() {
 
-            return new PIMDevice(name, pattern, version);
+            return new PIMDevice(name, rawRegex, version);
         }
     }
 }

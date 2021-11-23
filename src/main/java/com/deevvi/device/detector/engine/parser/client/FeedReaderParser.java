@@ -50,7 +50,7 @@ public final class FeedReaderParser extends ClientParser implements ListLoader<F
                 .withType((String) map.get(TYPE))
                 .withUrl((String) map.get(URL))
                 .withVersion((String) map.get(VERSION))
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .build();
     }
 

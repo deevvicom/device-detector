@@ -1,7 +1,5 @@
 package com.deevvi.device.detector.model.device;
 
-import java.util.regex.Pattern;
-
 /**
  * Model for shell tv parser.
  */
@@ -12,9 +10,9 @@ public final class ShellTv extends BasicDevice {
     /**
      * Constructor.
      */
-    private ShellTv(Pattern pattern, String device, String brand, String model) {
+    private ShellTv(String rawRegex, String device, String brand, String model) {
 
-        super(pattern, device, brand);
+        super(rawRegex, device, brand);
         this.model = model;
     }
 
@@ -27,14 +25,14 @@ public final class ShellTv extends BasicDevice {
      */
     public static class Builder {
 
-        private Pattern pattern;
+        private String rawRegex;
         private String device;
         private String model;
         private String brand;
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -58,7 +56,7 @@ public final class ShellTv extends BasicDevice {
 
         public ShellTv build() {
 
-            return new ShellTv(pattern, device, brand, model);
+            return new ShellTv(rawRegex, device, brand, model);
         }
     }
 }

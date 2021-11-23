@@ -1,6 +1,7 @@
 package com.deevvi.device.detector.model.client;
 
 
+import com.deevvi.device.detector.model.PatternBuilder;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,13 +10,17 @@ import java.util.regex.Pattern;
 /**
  * Base model for any client.
  */
-public class Client {
+public class Client implements PatternBuilder {
 
     /**
      * Client name.
      */
     private final String name;
 
+    /**
+     * Raw regex;
+     */
+    private final String rawRegex;
     /**
      * Compiled regex used to detect a client.
      */
@@ -29,13 +34,14 @@ public class Client {
     /**
      * Constructor.
      */
-    protected Client(String name, Pattern pattern, String version) {
+    protected Client(String name, String rawRegex, String version) {
 
         Preconditions.checkNotNull(StringUtils.trimToNull(name), "Name cannot be null or empty.");
-        Preconditions.checkNotNull(pattern, "Regex pattern cannot be null.");
+        Preconditions.checkNotNull(StringUtils.trimToNull(rawRegex), "Raw regex cannot be null or empty.");
 
         this.name = name;
-        this.pattern = pattern;
+        this.rawRegex = rawRegex;
+        this.pattern = toPattern(rawRegex);
         this.version = version;
     }
 
@@ -67,5 +73,14 @@ public class Client {
     public String getVersion() {
 
         return version;
+    }
+
+    /**
+     * Get raw regex.
+     *
+     * @return raw regex
+     */
+    public String getRawRegex() {
+        return rawRegex;
     }
 }

@@ -3,8 +3,6 @@ package com.deevvi.device.detector.model.client;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.regex.Pattern;
-
 /**
  * Model for feed reader parser.
  */
@@ -16,9 +14,9 @@ public final class FeedReader extends Client {
     /**
      * Constructor.
      */
-    private FeedReader(String name, Pattern pattern, String version, String url, String type) {
+    private FeedReader(String name, String rawRegex, String version, String url, String type) {
 
-        super(name, pattern, version);
+        super(name, rawRegex, version);
         Preconditions.checkNotNull(StringUtils.trimToNull(url), "Feed parser url cannot be null or empty.");
         Preconditions.checkNotNull(StringUtils.trimToNull(type), "Feed parser type cannot be null or empty.");
 
@@ -42,7 +40,7 @@ public final class FeedReader extends Client {
     public static class Builder {
 
         private String name;
-        private Pattern pattern;
+        private String rawRegex;
         private String version;
         private String url;
         private String type;
@@ -56,9 +54,9 @@ public final class FeedReader extends Client {
             return this;
         }
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -82,7 +80,7 @@ public final class FeedReader extends Client {
 
         public FeedReader build() {
 
-            return new FeedReader(name, pattern, version, url, type);
+            return new FeedReader(name, rawRegex, version, url, type);
         }
 
     }

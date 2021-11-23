@@ -1,16 +1,18 @@
 -
-  user_agent: XBMC/PRE-11.0 Git:20110623-62171b3 (iOS; 11.0.0 AppleTV2,1; http://www.xbmc.org)
+  user_agent: Mozilla/5.0 (WebOS; Linux/SmartTV) AppleWebKit/537.36 (KHTML, likeGecko) Chrome/53.0.2785.34 Safari/537.36 HbbTV/1.4.1 ( DRM; LGE; 43UM71007LB; WEBOS4.5 03.50.90; W45_K5LP; DTV_W19P;)
   os:
-    name: tvOS
-    version: 11.0.0
-    platform: ARM
+    name: webOS
+    version: "4.5"
+    platform: ""
   client:
-    type: mediaplayer
-    name: XBMC
-    version: ""
+    type: browser
+    name: Chrome
+    version: 53.0.2785.34
+    engine: Blink
+    engine_version: ""
   device:
     type: tv
-    brand: Apple
-    model: Apple TV 2
-  os_family: iOS
-  browser_family: Unknown
+    brand: LG
+    model: 43UM71007LB
+  os_family: Other Mobile
+  browser_family: Chrome

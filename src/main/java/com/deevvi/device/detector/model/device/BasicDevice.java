@@ -1,5 +1,6 @@
 package com.deevvi.device.detector.model.device;
 
+import com.deevvi.device.detector.model.PatternBuilder;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,7 +9,12 @@ import java.util.regex.Pattern;
 /**
  * Base model for any client.
  */
-public class BasicDevice {
+public class BasicDevice implements PatternBuilder {
+
+    /**
+     * Raw regex;
+     */
+    private final String rawRegex;
 
     /**
      * Compiled regex user to determine a device.
@@ -28,12 +34,13 @@ public class BasicDevice {
     /**
      * Constructor.
      */
-    public BasicDevice(Pattern pattern, String device, String brand) {
+    public BasicDevice(String rawRegex, String device, String brand) {
 
-        Preconditions.checkNotNull(pattern, "Regex pattern cannot be null.");
+        Preconditions.checkNotNull(StringUtils.trimToNull(rawRegex), "Raw regex cannot be null or empty.");
         Preconditions.checkNotNull(StringUtils.trimToNull(brand), "Brand cannot be null or empty.");
 
-        this.pattern = pattern;
+        this.rawRegex = rawRegex;
+        this.pattern = toPattern(rawRegex);
         this.device = device;
         this.brand = brand;
     }
@@ -63,5 +70,14 @@ public class BasicDevice {
      */
     public String getBrand() {
         return brand;
+    }
+
+    /**
+     * Get raw regex.
+     *
+     * @return raw regex
+     */
+    public String getRawRegex() {
+        return rawRegex;
     }
 }

@@ -1,5 +1,8 @@
 package com.deevvi.device.detector.model.device;
 
+import com.deevvi.device.detector.model.Model;
+
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -11,9 +14,9 @@ public final class PortableMediaPlayer extends Device {
     /**
      * Constructor.
      */
-    private PortableMediaPlayer(Pattern pattern, String device, String model, String brand, Map<Pattern, String> models) {
+    private PortableMediaPlayer(String rawRegex, String device, String model, String brand, List<Model> models) {
 
-        super(pattern, device, model, brand, models);
+        super(rawRegex, device, model, brand, models);
     }
 
     /**
@@ -21,15 +24,15 @@ public final class PortableMediaPlayer extends Device {
      */
     public static class Builder {
 
-        private Pattern pattern;
+        private String rawRegex;
         private String device;
         private String model;
         private String brand;
-        private Map<Pattern, String> models;
+        private List<Model> models;
 
-        public Builder withPattern(Pattern pattern) {
+        public Builder withRawRegex(String rawRegex) {
 
-            this.pattern = pattern;
+            this.rawRegex = rawRegex;
             return this;
         }
 
@@ -51,7 +54,7 @@ public final class PortableMediaPlayer extends Device {
             return this;
         }
 
-        public Builder withModels(Map<Pattern, String> models) {
+        public Builder withModels(List<Model> models) {
 
             this.models = models;
             return this;
@@ -59,7 +62,7 @@ public final class PortableMediaPlayer extends Device {
 
         public PortableMediaPlayer build() {
 
-            return new PortableMediaPlayer(pattern, device, model, brand, models);
+            return new PortableMediaPlayer(rawRegex, device, model, brand, models);
         }
     }
 }

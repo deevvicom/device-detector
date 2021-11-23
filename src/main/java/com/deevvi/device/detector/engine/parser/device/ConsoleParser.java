@@ -2,13 +2,13 @@ package com.deevvi.device.detector.engine.parser.device;
 
 import com.deevvi.device.detector.engine.loader.MapLoader;
 import com.deevvi.device.detector.engine.parser.Parser;
+import com.deevvi.device.detector.model.Model;
 import com.deevvi.device.detector.model.device.Console;
 import com.deevvi.device.detector.model.device.Device;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import static com.deevvi.device.detector.engine.parser.device.DeviceType.CONSOLE;
 
@@ -45,17 +45,17 @@ public final class ConsoleParser extends DeviceParser implements Parser, MapLoad
     public Console toObject(String key, Object value) {
 
         Map map = (Map) value;
-        Map<Pattern, String> models = Maps.newLinkedHashMap();
+        List<Model> models = Lists.newArrayList();
         if (map.containsKey(MODELS)) {
             ((List) map.get(MODELS)).forEach(obj -> {
                 Map modelEntry = (Map) obj;
-                models.put(toPattern((String) modelEntry.get(REGEX)), (String) modelEntry.get(MODEL));
+                models.add(new Model((String) modelEntry.get(REGEX), (String) modelEntry.get(MODEL)));
             });
         }
 
         return new Console.Builder()
                 .withDevice((String) map.get(DEVICE))
-                .withPattern(toPattern((String) map.get(REGEX)))
+                .withRawRegex((String) map.get(REGEX))
                 .withModel((String) map.getOrDefault(MODEL, EMPTY_STRING))
                 .withBrand(key)
                 .withModels(models)

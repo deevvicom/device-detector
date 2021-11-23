@@ -1,6 +1,7 @@
 package com.deevvi.device.detector.engine.parser.device;
 
 import com.deevvi.device.detector.engine.parser.Parser;
+import com.deevvi.device.detector.model.Model;
 import com.deevvi.device.detector.model.device.Device;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Device parser.
@@ -28,10 +28,10 @@ abstract class DeviceParser implements Parser {
 
                 return toMap(buildModel(matcher, device, userAgent), Optional.ofNullable(device.getBrand()));
             } else if (!device.getModels().isEmpty()) {
-                for (Map.Entry<Pattern, String> entry : device.getModels().entrySet()) {
-                    Matcher modelMatcher = entry.getKey().matcher(userAgent);
+                for(Model model: device.getModels()){
+                    Matcher modelMatcher = model.getPattern().matcher(userAgent);
                     if (modelMatcher.find()) {
-                        return toMap(Optional.of(entry.getValue()), Optional.ofNullable(device.getBrand()));
+                        return toMap(Optional.of(model.getModel()), Optional.ofNullable(device.getBrand()));
                     }
                 }
             }
@@ -67,11 +67,11 @@ abstract class DeviceParser implements Parser {
 
     private Optional<String> buildFromModels(Device device, String userAgent) {
 
-        for (Map.Entry<Pattern, String> entry : device.getModels().entrySet()) {
-            Matcher modelMatcher = entry.getKey().matcher(userAgent);
+        for (Model model : device.getModels()) {
+            Matcher modelMatcher = model.getPattern().matcher(userAgent);
             if (modelMatcher.find()) {
 
-                return buildModelWithPattern(modelMatcher, entry.getValue());
+                return buildModelWithPattern(modelMatcher, model.getModel());
             }
         }
 
