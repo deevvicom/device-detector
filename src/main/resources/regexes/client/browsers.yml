@@ -1,3 +1,17 @@
+# T+Browser (https://t.chanjet.com/tplus/view/login/downloadBrowser.html | https://dad.chanapp.chanjet.com/tplusapp/TPlusBrowser.exe)
+- regex: 'T\+Browser/(\d+[\.\d]+)'
+  name: 'T+Browser'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
+# ChanjetCloud (https://dad.chanapp.chanjet.com/tplusapp/HsySetup.exe)
+- regex: 'ChanjetCloud/(\d+[\.\d]+)'
+  name: 'ChanjetCloud'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
 # Sushi Browser (https://sushi-browser.com/)
 - regex: 'SushiBrowser/(\d+[\.\d]+)'
   name: 'Sushi Browser'
@@ -505,9 +519,21 @@
   version: '$1'
 
 # Lunascape Lite (https://www.lunascape.tv/)
-- regex: 'iLunascapeLite/(?:(\d+[\.\d]+))?'
+- regex: 'iLunascapeLite/(?:(\d+\.[.\d]+))?'
   name: 'Lunascape Lite'
   version: '$1'
+
+# Lunascape
+- regex: 'Chrome/.+ i?Lunascape(?:[/ ](\d+\.[.\d]+))?'
+  name: 'Lunascape'
+  version: '$1'
+  engine:
+    default: 'Blink'
+- regex: 'i?Lunascape(?:[/ ](\d+\.[.\d]+))?'
+  name: 'Lunascape'
+  version: '$1'
+  engine:
+    default: '' # multi engine
 
 # Polypane (https://polypane.app/)
 - regex: 'Polypane/(?:(\d+[\.\d]+))?'
@@ -660,6 +686,10 @@
 - regex: 'Beamrise(?:/(\d+[\.\d]+))?'
   name: 'Beamrise'
   version: '$1'
+  engine:
+    default: 'WebKit'
+    versions:
+      28: 'Blink'
 
 # Faux Browser (https://apps.apple.com/us/app/faux-browser/id472250940)
 - regex: 'Faux(?:/(\d+[\.\d]+))?'
@@ -775,10 +805,19 @@
   engine:
     default: 'Blink'
 
-# Huawei Browser
+# Huawei Browser Mobile
 - regex: 'HuaweiBrowser(?:/(\d+[\.\d]+))?'
+  name: 'Huawei Browser Mobile'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
+# Huawei Browser
+- regex: 'HBPC/(\d+[\.\d]+)'
   name: 'Huawei Browser'
   version: '$1'
+  engine:
+    default: 'Blink'
 
 # vivo Browser
 - regex: 'VivoBrowser(?:/(\d+[\.\d]+))?'
@@ -914,7 +953,7 @@
   version: '$1'
 
 # Avast Secure Browser | Avast SafeZone Browser (https://www.avast.com/)
-- regex: '(?:Avast|ASW|Safer)(?:/(\d+[\.\d]+))?'
+- regex: '(?:Avast(?:SecureBrowser)?|ASW|Safer)(?:/(\d+[\.\d]+))?'
   name: 'Avast Secure Browser'
   version: '$1'
 
@@ -1492,6 +1531,8 @@
   version: '$1'
   engine:
     default: 'WebKit'
+    versions:
+      28: 'Blink'
 
 - regex: 'Iron(?:/(\d+[\.\d]+))?'
   name: 'Iron'
@@ -1593,6 +1634,8 @@
 - regex: 'UBrowser(?:/(\d+[\.\d]+))?'
   name: 'UBrowser'
   version: '$1'
+  engine:
+    default: 'Blink'
 
 #Streamy (Chromium based)
 - regex: 'Streamy(?:/(\d+[\.\d]+))?'
@@ -1642,6 +1685,11 @@
 
 # Web Explorer
 - regex: 'Web Explorer/(\d+[\.\d]+).*Chrome'
+  name: 'Web Explorer'
+  version: '$1'
+  engine:
+    default: 'WebKit'
+- regex: 'webexplorer/(\d+)'
   name: 'Web Explorer'
   version: '$1'
   engine:
@@ -1714,6 +1762,16 @@
   version: '$1'
   engine:
     default: 'WebKit'
+
+# iBrowser Mini
+- regex: 'iBrowser/Mini(\d+\.\d+)'
+  name: 'iBrowser Mini'
+  version: '$1'
+
+# iBrowser
+- regex: 'iBrowser/(\d+\.[.\d]+)?'
+  name: 'iBrowser'
+  version: '$1'
 
 #IBrowse
 - regex: 'IBrowse(?:[ /](\d+[\.\d]+))?'
@@ -2065,13 +2123,6 @@
     default: 'iCab'
     versions:
       4: 'WebKit'
-
-#Lunascape
-- regex: 'i?Lunascape(?:[/ ](\d+[\.\d]+))?'
-  name: 'Lunascape'
-  version: '$1'
-  engine:
-    default: '' # multi engine
 
 # Crazy Browser
 - regex: 'Crazy Browser (\d+[\.\d]+)'

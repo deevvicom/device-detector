@@ -9,7 +9,7 @@ public interface PatternBuilder {
     /**
      * Template used for building patterns from a regex.
      */
-    String REGEX_PATTERN = "(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-)(?:%s)";;
+    String REGEX_PATTERN = "(?:^|[^A-Z0-9\\-_]|[^A-Z0-9\\-]_|sprd-|MZ-)(?:%s)";;
 
     /**
      * Convert a string to a compiled pattern, using the {@link this.REGEX_PATTERN} format.

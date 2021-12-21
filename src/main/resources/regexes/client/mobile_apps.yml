@@ -318,7 +318,11 @@
   version: ''
 
 # Discord (https://apps.apple.com/us/app/discord-talk-chat-hang-out/id985746746)
-- regex: 'Discord/([\d\.]+)'
+- regex: 'discord/([\d\.]+).+Electron'
+  name: 'Discord'
+  version: '$1'
+
+- regex: 'discord(?:-Updater)?/([\d\.]+)'
   name: 'Discord'
   version: ''
 
@@ -960,3 +964,18 @@
 - regex: 'Theyub v(\d+[\.\d]+)'
   name: 'Theyub'
   version: '$1'
+
+# BBC News
+- regex: 'BBCNewsUKWatchApp/(\d+[\.\d]+)'
+  name: 'BBC News'
+  version: '$1'
+
+# TradingView (https://www.tradingview.com/)
+- regex: 'TradingView/(\d+[\.\d]+)'
+  name: 'TradingView'
+  version: '$1'
+
+# Instabridge (https://instabridge.com/en/)
+- regex: 'Instabridge'
+  name: 'Instabridge'
+  version: ''
