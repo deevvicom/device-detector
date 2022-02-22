@@ -1,3 +1,18 @@
+# SiteKiosk (https://www.sitekiosk.com/)
+- regex: 'Chrome/.+ SiteKiosk (\d+[\.\d]+)'
+  name: 'SiteKiosk'
+  version: '$1'
+  engine:
+    default: 'Blink'
+- regex: 'SiteKiosk (\d+[\.\d]+)'
+  name: 'SiteKiosk'
+  version: '$1'
+
+# Reqwireless WebViewer
+- regex: 'ReqwirelessWeb/(\d+[\.\d]+)'
+  name: 'Reqwireless WebViewer'
+  version: '$1'
+
 # T+Browser (https://t.chanjet.com/tplus/view/login/downloadBrowser.html | https://dad.chanapp.chanjet.com/tplusapp/TPlusBrowser.exe)
 - regex: 'T\+Browser/(\d+[\.\d]+)'
   name: 'T+Browser'
@@ -723,6 +738,13 @@
   engine:
     default: 'Blink'
 
+# Hawk Quick Browser
+- regex: 'Hawk/QuickBrowser(?:/v?(\d+[\.\d]+))?'
+  name: 'Hawk Quick Browser'
+  version: '$1'
+  engine:
+    default: 'Blink'
+
 # FreeU (https://freeu.online/)
 - regex: 'FreeU(?:/(\d+[\.\d]+))?'
   name: 'FreeU'
@@ -951,6 +973,9 @@
 - regex: 'AlohaBrowser(?:/(\d+[\.\d]+))?'
   name: 'Aloha Browser'
   version: '$1'
+- regex: 'Aloha/'
+  name: 'Aloha Browser'
+  version: ''
 
 # Avast Secure Browser | Avast SafeZone Browser (https://www.avast.com/)
 - regex: '(?:Avast(?:SecureBrowser)?|ASW|Safer)(?:/(\d+[\.\d]+))?'
@@ -1328,6 +1353,11 @@
   version: '$1'
   engine:
     default: 'WebKit'
+- regex: 'Opera%20Touch/.+CFNetwork/.+Darwin/.+(?!.*x86_64)'
+  name: 'Opera Touch'
+  version: ''
+  engine:
+    default: 'WebKit'
 - regex: 'OPT/(\d+[\.\d]+)'
   name: 'Opera Touch'
   version: '$1'
@@ -1384,6 +1414,11 @@
       '3.5': 'Elektra'
       '7': 'Presto'
       '15': 'Blink'
+- regex: 'Opera/.+CFNetwork'
+  name: 'Opera'
+  version: ''
+  engine:
+    default: 'WebKit'
 
 #Rekonq
 - regex: 'rekonq(?:/(\d+[\.\d]+))?'
@@ -1499,7 +1534,7 @@
     default: 'WebKit'
     versions:
       '5.2': 'Blink'
-- regex: '(?:Maxthon(?:%20Browser)?|MxBrowser(?:-inhouse|-iPhone)?)[ /](\d+[\.\d]+)'
+- regex: '(?:Maxthon(?:%20Browser)?|MxBrowser(?:-inhouse|-iPhone)?|MXiOS)[ /](\d+[\.\d]+)?'
   name: 'Maxthon'
   version: '$1'
   engine:
@@ -1661,6 +1696,11 @@
 - regex: 'UC AppleWebKit'
   name: 'UC Browser'
   version: ''
+- regex: 'UC%20Browser/(\d+[\.\d]+)? CFNetwork/.+Darwin/.+(?!.*x86_64)'
+  name: 'UC Browser'
+  version: '$1'
+  engine:
+    default: 'WebKit'
 
 #It should be checked before Chrome since the UA contains the Chrome
 
@@ -1740,13 +1780,6 @@
 # 2345 Browser
 - regex: 'Mb2345Browser/(\d+[\.\d]+)'
   name: '2345 Browser'
-  version: '$1'
-  engine:
-    default: '' # multi engine -- WebKit or Blink
-
-# QtWebEngine
-- regex: 'QtWebEngine/(\d+[\.\d]+)'
-  name: 'QtWebEngine'
   version: '$1'
   engine:
     default: '' # multi engine -- WebKit or Blink
@@ -1875,6 +1908,18 @@
     versions:
       28: 'Blink'
 
+# LG Browser
+- regex: 'LG Browser(?:/(\d+[\.\d]+))'
+  name: 'LG Browser'
+  version: '$1'
+
+# QtWebEngine should be placed after LG Browser
+- regex: 'QtWebEngine/(\d+[\.\d]+)'
+  name: 'QtWebEngine'
+  version: '$1'
+  engine:
+    default: '' # multi engine -- WebKit or Blink
+
 # Chrome Webview
 - regex: 'Version/.* Chrome(?:/(\d+[\.\d]+))?'
   name: 'Chrome Webview'
@@ -1930,7 +1975,7 @@
       28: 'Blink'
 
 #Tizen Browser
-- regex: '(?:Tizen|SLP) Browser(?:/(\d+[\.\d]+))?'
+- regex: '(?:Tizen|SLP) ?Browser(?:/(\d+[\.\d]+))?'
   name: 'Tizen Browser'
   version: '$1'
 - regex: 'Tizen (?:\d+[\.\d]+).+ Version/(\d+[\.\d]+) (?:TV|Mobile)'
@@ -2096,8 +2141,20 @@
   engine:
     default: 'Gecko'
 
-#Google Earth
-- regex: 'Google Earth(?:/(\d+[\.\d]+))?'
+# Google Earth Pro (https://www.google.se/intl/en/earth/versions/)
+- regex: '(?:Google Earth Pro|Google%20Earth%20Pro)(?:/(\d+[\.\d]+))?'
+  name: 'Google Earth Pro'
+  version: '$1'
+  engine:
+    default: 'WebKit'
+- regex: 'GoogleEarth/(\d+[\.\d]+).+client:(?:Plus|Pro)'
+  name: 'Google Earth Pro'
+  version: '$1'
+  engine:
+    default: 'WebKit'
+
+# Google Earth (https://www.google.se/intl/en/earth/versions/)
+- regex: 'Google ?Earth(?:/v?(\d+[\.\d]+))?'
   name: 'Google Earth'
   version: '$1'
   engine:
@@ -2191,11 +2248,6 @@
   version: '$1'
   engine:
     default: 'Text-based'
-
-# LG Browser
-- regex: 'LG Browser(?:/(\d+[\.\d]+))'
-  name: 'LG Browser'
-  version: '$1'
 
 # LuaKit
 - regex: 'LuaKit(?:/(\d+[\.\d]+))?'
@@ -2304,7 +2356,7 @@
   version: ''
 
 #Android Browser
-- regex: 'Android'
+- regex: '(?<!FreeBSD; U; Viera; like )Android'
   name: 'Android Browser'
   version: ''
   engine:
@@ -2314,10 +2366,22 @@
 - regex: 'Coast(?:/(\d+[\.\d]+))?'
   name: 'Coast'
   version: '$1'
+- regex: 'Opera%20Coast/(\d+[\.\d]+)? CFNetwork/.+Darwin/.+(?!.*x86_64)'
+  name: 'Coast'
+  version: '$1'
+  engine:
+    default: 'WebKit'
 
 # surf (https://surf.suckless.org/)
 - regex: 'Surf(?:/(\d+[\.\d]+))?'
   name: 'surf'
+  version: '$1'
+  engine:
+    default: 'WebKit'
+
+# Safari Technology Preview (https://developer.apple.com/safari/technology-preview/)
+- regex: 'Safari%20Technology%20Preview/(\d+[\.\d]+)'
+  name: 'Safari Technology Preview'
   version: '$1'
   engine:
     default: 'WebKit'
@@ -2338,7 +2402,7 @@
   version: ''
   engine:
     default: 'WebKit'
-- regex: 'Version/(\d+[\.\d]+).*Safari/|Safari/?\d+'
+- regex: 'Version/(\d+[\.\d]+).*Safari/|(?:Safari|Safari(?:%20)?%E6%B5%8F%E8%A7%88%E5%99%A8)/?\d+'
   name: 'Safari'
   version: '$1'
   engine:
@@ -2379,7 +2443,7 @@
   version: '$1'
 
 # MAUI Wap Browser
-- regex: 'WAP Browser/MAUI|(?:\w+)?Maui Wap Browser|MAUI[- ]Browser'
+- regex: 'WAP Browser/MAUI|(?:\w*)Maui Wap Browser|MAUI[- ]Browser'
   name: 'MAUI WAP Browser'
   version: ''
 

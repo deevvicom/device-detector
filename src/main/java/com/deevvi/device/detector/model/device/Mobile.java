@@ -100,8 +100,6 @@ public final class Mobile extends BasicDevice {
 
         public Model(String rawRegex, String device, String model, String brand) {
 
-            Preconditions.checkNotNull(StringUtils.trimToNull(rawRegex), "Raw regex cannot be null or empty.");
-
             this.pattern = toPattern(rawRegex);
             this.device = device;
             this.model = model;

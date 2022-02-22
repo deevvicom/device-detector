@@ -1,8 +1,13 @@
+# SlimerJS (https://www.slimerjs.org/)
+- regex: 'SlimerJS/(\d+[\.\d]+)'
+  name: 'SlimerJS'
+  version: '$1'
+
 - regex: 'Wget(?:/(\d+[\.\d]+))?'
   name: 'Wget'
   version: '$1'
 
-- regex: 'Guzzle(?:/(\d+[\.\d]+))?'
+- regex: 'Guzzle(?:Http)?(?:/(\d+[\.\d]+))?'
   name: 'Guzzle (PHP HTTP Client)'
   version: '$1'
 
@@ -48,7 +53,7 @@
   name: 'aiohttp'
   version: '$1'
 
-- regex: 'Google-HTTP-Java-Client(?:/(\d+[\.\d\w-]+))?'
+- regex: 'Google-HTTP-Java-Client(?:/(\d+[\.\w-]+))?'
   name: 'Google HTTP Java Client'
   version: '$1'
 
@@ -162,4 +167,14 @@
 
 - regex: 'lua-resty-http/([\.\d]+).+ngx_'
   name: 'LUA OpenResty NGINX'
+  version: '$1'
+
+# https://github.com/Kong/unirest-java
+- regex: 'unirest-java/([\.\d]+)'
+  name: 'Unirest for Java'
+  version: '$1'
+
+# jsdom (https://github.com/jsdom/jsdom)
+- regex: 'jsdom/([\.\d]+)'
+  name: 'jsdom'
   version: '$1'
